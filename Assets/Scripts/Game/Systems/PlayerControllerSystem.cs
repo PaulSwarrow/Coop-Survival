@@ -9,7 +9,7 @@ namespace DefaultNamespace
 
 
         private GameCharacter target;
-        public GameCharacter Target => target; //hide by inteface?
+        public GameCharacter Target => target; //hide by interface?
 
         public override void Init()
         {
@@ -18,11 +18,17 @@ namespace DefaultNamespace
 
         public override void Start()
         {
+            GameManager.UpdateEvent += OnUpdate;
+        }
+
+        private void OnUpdate()
+        {
             
         }
 
         public override void Stop()
         {
+            GameManager.UpdateEvent += OnUpdate;
         }
     }
 }
