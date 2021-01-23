@@ -4,7 +4,6 @@ namespace DefaultNamespace
 {
     public class GameSystemA : GameSystem
     {
-        public bool Test;
         [Inject] private GameSystemB systemB;
 
 

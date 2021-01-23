@@ -11,6 +11,12 @@
             <e p="GameManager.cs" t="Include" />
             <e p="GameSystem.cs" t="Include" />
             <e p="InjectAttribute.cs" t="Include" />
+            <e p="Interfaces" t="Include">
+              <e p="IPoolable.cs" t="Include" />
+            </e>
+            <e p="Systems" t="Include">
+              <e p="ObjectSpawnSystem.cs" t="Include" />
+            </e>
           </e>
           <e p="QuickTools" t="Include">
             <e p="Collections" t="Include">
