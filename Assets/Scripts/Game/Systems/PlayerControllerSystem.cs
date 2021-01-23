@@ -9,6 +9,8 @@ namespace DefaultNamespace
 
 
         private GameCharacter target;
+        public GameCharacter Target => target; //hide by inteface?
+
         public override void Init()
         {
             target = characterSystem.CreateCharacter(Vector3.zero, Vector3.forward);

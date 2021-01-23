@@ -41,6 +41,7 @@
             </e>
             <e p="Systems" t="Include">
               <e p="GameCharacterSystem.cs" t="Include" />
+              <e p="PlayerCameraSystem.cs" t="Include" />
               <e p="PlayerControllerSystem.cs" t="Include" />
             </e>
           </e>
