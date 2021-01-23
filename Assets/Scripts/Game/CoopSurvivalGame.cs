@@ -22,5 +22,6 @@ public class CoopSurvivalGame : GameManager
         //register objects:
         Register(GetComponent<PrefabLoader>());
         Register(virtualCamera);
+        Register(Camera.main);
     }
 }
