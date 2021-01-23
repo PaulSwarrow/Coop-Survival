@@ -3,8 +3,34 @@
   <component name="ContentModelStore">
     <e p="C:\Users\Pall\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Pall\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Coop Survival.-969367821.00" t="ExcludeRecursive" />
-    <e p="D:\Pall\coding\Coop Survival" t="IncludeFlat">
+    <e p="D:\Pall\coding\Coop Survival" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Libs" t="Include">
+          <e p="GameFramework" t="Include">
+            <e p="GameManager.cs" t="Include" />
+            <e p="GameSystem.cs" t="Include" />
+            <e p="InjectAttribute.cs" t="Include" />
+          </e>
+          <e p="QuickTools" t="Include">
+            <e p="Collections" t="Include">
+              <e p="CollectionExtension.cs" t="Include" />
+              <e p="GenericMap.cs" t="Include" />
+            </e>
+            <e p="EnumTools.cs" t="Include" />
+            <e p="ReflectionTools.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="CoopSurvivalGame.cs" t="Include" />
+          <e p="GameSystemA.cs" t="Include" />
+          <e p="GameSystemB.cs" t="Include" />
+        </e>
+      </e>
       <e p="Coop Survival.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
   </component>
 </project>

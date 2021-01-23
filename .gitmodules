@@ -1,0 +1,6 @@
+[submodule "Assets/Libs/QuickTools"]
+	path = Assets/Libs/QuickTools
+	url = git@github.com:PaulSwarrow/UnityQuickTools.git
+[submodule "Assets/Libs/GameFramework"]
+	path = Assets/Libs/GameFramework
+	url = git@github.com:PaulSwarrow/UnityGameFramework.git
