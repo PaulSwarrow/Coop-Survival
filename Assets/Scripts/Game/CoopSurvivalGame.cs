@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DefaultNamespace;
 using Game.Actors;
 using Game.GameManagerTools;
+using Game.Systems;
 using UnityEngine;
 
 public class CoopSurvivalGame : GameManager
@@ -18,6 +19,7 @@ public class CoopSurvivalGame : GameManager
     {
         Register(new PlayerControllerSystem());
         Register(new GameCharacterSystem());
+        Register(new ObjectSpawnSystem());
         Register(GetComponent<PrefabLoader>());
     }
 }

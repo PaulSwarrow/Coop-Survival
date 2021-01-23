@@ -7,7 +7,7 @@ namespace DefaultNamespace
 {
     public class GameCharacterSystem : GameSystem
     {
-        [Inject] private ObjsetSpawnSystem _spawnSystem;
+        [Inject] private ObjectSpawnSystem _spawnSystem;
         [Inject] private PrefabLoader _prefabLoader;
         public override void Start()
         {
