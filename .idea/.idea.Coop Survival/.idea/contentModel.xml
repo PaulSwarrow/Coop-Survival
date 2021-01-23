@@ -33,6 +33,9 @@
               <e p="GameCharacterActor.cs" t="Include" />
             </e>
             <e p="CoopSurvivalGame.cs" t="Include" />
+            <e p="Data" t="Include">
+              <e p="MovementSpeed.cs" t="Include" />
+            </e>
             <e p="GameManagerTools" t="Include">
               <e p="PrefabLoader.cs" t="Include" />
             </e>

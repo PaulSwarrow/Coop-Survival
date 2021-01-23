@@ -27,8 +27,10 @@ namespace DefaultNamespace
             var input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             var q = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
             var inputVector = q * Vector3.ClampMagnitude(input, 1);
+            var lookVector = q * Vector3.forward;
 
-            target.Move(inputVector);
+            target.actor.motor.Move(inputVector);
+            target.actor.motor.Look(lookVector);
         }
 
         public override void Stop()
