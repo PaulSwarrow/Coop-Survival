@@ -28,9 +28,22 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="CoopSurvivalGame.cs" t="Include" />
-          <e p="GameSystemA.cs" t="Include" />
-          <e p="GameSystemB.cs" t="Include" />
+          <e p="Game" t="Include">
+            <e p="Actors" t="Include">
+              <e p="GameCharacterActor.cs" t="Include" />
+            </e>
+            <e p="CoopSurvivalGame.cs" t="Include" />
+            <e p="GameManagerTools" t="Include">
+              <e p="PrefabLoader.cs" t="Include" />
+            </e>
+            <e p="Models" t="Include">
+              <e p="GameCharacter.cs" t="Include" />
+            </e>
+            <e p="Systems" t="Include">
+              <e p="GameCharacterSystem.cs" t="Include" />
+              <e p="PlayerControllerSystem.cs" t="Include" />
+            </e>
+          </e>
         </e>
       </e>
       <e p="Coop Survival.sln" t="IncludeFlat" />
