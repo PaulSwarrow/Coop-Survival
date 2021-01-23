@@ -23,7 +23,11 @@ namespace Game.Tools
         {
             _animator = animator;
             _agent = agent;
-            
+        }
+
+        public bool Aiming
+        {
+            set => _animator.SetBool("armed", value);
         }
 
         public void Update()
@@ -37,7 +41,6 @@ namespace Game.Tools
 
         public void Move(Vector3 inputVector)
         {
-            
             _agent.speed = speedValues[speed];
             _agent.velocity = inputVector * _agent.speed;
         }
@@ -45,9 +48,8 @@ namespace Game.Tools
 
         public void Look(Vector3 forward)
         {
-            _agent.updateRotation = false;
+            // _agent.updateRotation = false;
             _agent.transform.forward = forward;
         }
-        
     }
 }
