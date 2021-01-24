@@ -1,6 +1,7 @@
 ﻿using Game.GameManagerTools;
 using Game.Models;
-using Game.Systems;
+using Libs.GameFramework;
+using Libs.GameFramework.Systems;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -9,11 +10,11 @@ namespace DefaultNamespace
     {
         [Inject] private ObjectSpawnSystem _spawnSystem;
         [Inject] private PrefabLoader _prefabLoader;
-        public override void Start()
+        public override void Subscribe()
         {
         }
 
-        public override void Stop()
+        public override void Unsubscribe()
         {
         }
 

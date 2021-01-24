@@ -12,6 +12,7 @@
             <e p="GameSystem.cs" t="Include" />
             <e p="InjectAttribute.cs" t="Include" />
             <e p="Interfaces" t="Include">
+              <e p="IGameSystem.cs" t="Include" />
               <e p="IPoolable.cs" t="Include" />
             </e>
             <e p="Systems" t="Include">
@@ -24,6 +25,7 @@
               <e p="GenericMap.cs" t="Include" />
             </e>
             <e p="EnumTools.cs" t="Include" />
+            <e p="Geometry.cs" t="Include" />
             <e p="ReflectionTools.cs" t="Include" />
           </e>
         </e>
@@ -417,13 +419,16 @@
             <e p="GameManagerTools" t="Include">
               <e p="PrefabLoader.cs" t="Include" />
             </e>
+            <e p="GameNetworkManager.cs" t="Include" />
             <e p="Models" t="Include">
               <e p="GameCharacter.cs" t="Include" />
             </e>
             <e p="Systems" t="Include">
               <e p="GameCharacterSystem.cs" t="Include" />
+              <e p="NetObjectSpawnSystem.cs" t="Include" />
               <e p="PlayerCameraSystem.cs" t="Include" />
               <e p="PlayerControllerSystem.cs" t="Include" />
+              <e p="SaveLoadSystem.cs" t="Include" />
             </e>
             <e p="Tools" t="Include">
               <e p="CharacterMotor.cs" t="Include" />

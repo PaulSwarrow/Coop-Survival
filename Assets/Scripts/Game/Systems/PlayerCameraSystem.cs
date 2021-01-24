@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using Libs.GameFramework;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -7,16 +8,22 @@ namespace DefaultNamespace
     {
         [Inject] private CinemachineFreeLook vcamera;
         [Inject] private PlayerControllerSystem playerController;
-        public override void Start()
+
+        public override void Subscribe()
+        {
+            playerController.CharacterGotEvent += SetTarget;
+        }
+
+        private void SetTarget()
         {
             vcamera.Follow = playerController.Target.actor.transform;
             vcamera.LookAt = playerController.Target.actor.cameraTarget;
         }
 
 
-        public override void Stop()
+        public override void Unsubscribe()
         {
-            
+            playerController.CharacterGotEvent -= SetTarget;
         }
     }
 }

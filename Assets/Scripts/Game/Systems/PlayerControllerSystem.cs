@@ -1,10 +1,17 @@
-﻿using Game.Models;
+﻿using System;
+using Game.Models;
+using Libs.GameFramework;
+using Mirror;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace DefaultNamespace
 {
     public class PlayerControllerSystem : GameSystem
     {
+        public event Action CharacterGotEvent;
+        public event Action CharacterLooseEvent;
+        
         [Inject] private GameCharacterSystem characterSystem;
         [Inject] private Camera camera;
 
@@ -14,12 +21,26 @@ namespace DefaultNamespace
 
         public override void Init()
         {
-            target = characterSystem.CreateCharacter(Vector3.zero, Vector3.forward);
+        }
+        
+
+        public void SetCharacter(GameCharacter character)
+        {
+            Assert.IsNotNull(character);
+            if(target != null) ClearCharacter();
+            target = character;
+            CharacterGotEvent?.Invoke();
         }
 
-        public override void Start()
+        public void ClearCharacter()
         {
-            GameManager.UpdateEvent += OnUpdate;
+            target = null;
+            CharacterLooseEvent?.Invoke();
+        }
+
+        public override void Subscribe()
+        {
+            // GameManager.UpdateEvent += OnUpdate;
         }
 
         private void OnUpdate()
@@ -35,9 +56,9 @@ namespace DefaultNamespace
             if (aim) target.actor.motor.Look(lookVector);
         }
 
-        public override void Stop()
+        public override void Unsubscribe()
         {
-            GameManager.UpdateEvent += OnUpdate;
+            // GameManager.UpdateEvent += OnUpdate;
         }
     }
 }
