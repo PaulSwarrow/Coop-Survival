@@ -14,10 +14,10 @@ public class CoopSurvivalGame : GameManager
     protected override void RegisterDependencies()
     {
         //register systems:
-        Register(new PlayerControllerSystem());
+        /*Register(new PlayerControllerSystem());
         Register(new GameCharacterSystem());
         Register(new ObjectSpawnSystem());
-        Register(new PlayerCameraSystem());
+        Register(new PlayerCameraSystem());*/
         
         //register objects:
         Register(GetComponent<PrefabLoader>());
