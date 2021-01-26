@@ -19,7 +19,7 @@ public class GameManager : BaseGameManager
         Register(new PlayerControllerSystem());
         Register(new GameCharacterSystem());
         Register<ObjectSpawnSystem>(new NetObjectSpawnSystem());
-        // Register(new PlayerCameraSystem());
+        Register(new PlayerCameraSystem());
         Register(new SaveLoadSystem());
         Register(GetNetworkSystem());
 

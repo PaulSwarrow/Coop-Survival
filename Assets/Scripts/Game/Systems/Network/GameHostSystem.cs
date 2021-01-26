@@ -25,7 +25,7 @@ namespace DefaultNamespace
         
         private void OnNewPlayer(NetworkConnection connection)
         {
-            if (characters.TryFind(item => true, out var character))
+            if (characters.TryFind(item => item.owner == null, out var character))
             {
                 SetPlayerControl(character, connection);
                 character.actor.SetAuthority(connection);
@@ -34,6 +34,7 @@ namespace DefaultNamespace
 
         private void SetPlayerControl(GameCharacter character, NetworkConnection connection)
         {
+            character.owner = connection.identity;
             NetworkServer.SendToClientOfPlayer(connection.identity, new GiveCharacterMessage
             {
                 actor = character.actor.id
