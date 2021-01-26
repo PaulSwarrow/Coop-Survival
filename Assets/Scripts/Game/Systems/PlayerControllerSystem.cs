@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Actors;
 using Game.Models;
 using Libs.GameFramework;
 using Mirror;
@@ -14,17 +15,18 @@ namespace DefaultNamespace
         
         [Inject] private GameCharacterSystem characterSystem;
         [Inject] private Camera camera;
+        
 
 
-        private GameCharacter target;
-        public GameCharacter Target => target; //hide by interface?
+        private GameCharacterActor target;
+        public GameCharacterActor Target => target; //hide by interface?
 
         public override void Init()
         {
         }
         
 
-        public void SetCharacter(GameCharacter character)
+        public void SetCharacter(GameCharacterActor character)
         {
             Assert.IsNotNull(character);
             if(target != null) ClearCharacter();
@@ -40,25 +42,27 @@ namespace DefaultNamespace
 
         public override void Subscribe()
         {
-            // GameManager.UpdateEvent += OnUpdate;
+            GameManager.UpdateEvent += OnUpdate;
         }
 
         private void OnUpdate()
         {
+            if(target == null) return; //TODO opt
+            
             var aim = Input.GetButton("Fire2");
             var input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             var q = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
             var inputVector = q * Vector3.ClampMagnitude(input, 1);
             var lookVector = q * Vector3.forward;
 
-            target.actor.motor.Move(inputVector);
-            target.actor.motor.Aiming = aim;
-            if (aim) target.actor.motor.Look(lookVector);
+            target.motor.Move(inputVector);
+            target.motor.Aiming = aim;
+            if (aim) target.motor.Look(lookVector);
         }
 
         public override void Unsubscribe()
         {
-            // GameManager.UpdateEvent += OnUpdate;
+            GameManager.UpdateEvent -= OnUpdate;
         }
     }
 }

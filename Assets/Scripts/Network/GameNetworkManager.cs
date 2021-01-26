@@ -8,8 +8,12 @@ namespace DefaultNamespace
 {
     public class GameNetworkManager : NetworkManager
     {
+        public delegate void ConnectionEventDelegate(NetworkConnection connection);
+
         public event Action SessionStart;
-        
+        public event ConnectionEventDelegate PlayerAddedEvent;
+
+
         public override void OnServerConnect(NetworkConnection conn)
         {
             Debug.Log("Server: new client");
@@ -28,7 +32,7 @@ namespace DefaultNamespace
             base.OnServerChangeScene(newSceneName);
         }
 
-       public override void OnServerSceneChanged(string sceneName)
+        public override void OnServerSceneChanged(string sceneName)
         {
             Debug.Log("Server: scene loaded");
             base.OnServerSceneChanged(sceneName);
@@ -50,10 +54,8 @@ namespace DefaultNamespace
         {
             Debug.Log("Server: player added");
             base.OnServerAddPlayer(conn);
+            if (numPlayers == 1) SessionStart?.Invoke();
+            PlayerAddedEvent?.Invoke(conn);
         }
-        
-        
-        
-
     }
 }

@@ -1,5 +1,8 @@
-﻿using Game.GameManagerTools;
+﻿using System;
+using System.Collections.Generic;
+using Game.GameManagerTools;
 using Game.Models;
+using Lib.UnityQuickTools.Collections;
 using Libs.GameFramework;
 using Libs.GameFramework.Systems;
 using UnityEngine;
@@ -10,6 +13,8 @@ namespace DefaultNamespace
     {
         [Inject] private ObjectSpawnSystem _spawnSystem;
         [Inject] private PrefabLoader _prefabLoader;
+        
+        private HashSet<GameCharacter> list = new HashSet<GameCharacter>();
         public override void Subscribe()
         {
         }
@@ -24,7 +29,15 @@ namespace DefaultNamespace
         {
             var character = new GameCharacter();
             character.actor = _spawnSystem.Spawn(_prefabLoader.characterPrefab, position, Quaternion.LookRotation(forward, Vector3.up));
+            list.Add(character);
             return character;
         }
+
+
+        public bool TryFind(Predicate<GameCharacter> predicate, out GameCharacter character)
+        {
+            return list.TryFind(predicate, out character);
+        }
+
     }
 }

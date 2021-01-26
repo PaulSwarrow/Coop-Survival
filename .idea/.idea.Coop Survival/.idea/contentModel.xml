@@ -500,6 +500,9 @@
                 <e p="GameClientSystem.cs" t="Include" />
                 <e p="GameHostSystem.cs" t="Include" />
                 <e p="GameNetworkSystem.cs" t="Include" />
+                <e p="Messages" t="Include">
+                  <e p="GiveCharacterMessage.cs" t="Include" />
+                </e>
               </e>
               <e p="PlayerCameraSystem.cs" t="Include" />
               <e p="PlayerControllerSystem.cs" t="Include" />

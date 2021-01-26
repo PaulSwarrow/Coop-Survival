@@ -1,4 +1,6 @@
-﻿using Libs.GameFramework;
+﻿using DefaultNamespace.Messages;
+using Game.Models;
+using Libs.GameFramework;
 using Mirror;
 using UnityEngine;
 
@@ -6,20 +8,43 @@ namespace DefaultNamespace
 {
     public class GameHostSystem : GameNetworkSystem
     {
-
+        [Inject] private SaveLoadSystem _saveLoadSystem;
+        [Inject] private GameCharacterSystem characters;
         public override void Subscribe()
         {
-            Debug.Log(_networkManager);
+            base.Subscribe();
+            _networkManager.SessionStart += OnSessionStart;
+            _networkManager.PlayerAddedEvent += OnNewPlayer;
+
         }
 
-        public override void Start()
+        private void OnSessionStart()
         {
-            base.Start();
-            Debug.Log("Game: start");
+            _saveLoadSystem.SpawnCharacters();
         }
+        
+        private void OnNewPlayer(NetworkConnection connection)
+        {
+            if (characters.TryFind(item => true, out var character))
+            {
+                SetPlayerControl(character, connection);
+                character.actor.SetAuthority(connection);
+            }
+        }
+
+        private void SetPlayerControl(GameCharacter character, NetworkConnection connection)
+        {
+            NetworkServer.SendToClientOfPlayer(connection.identity, new GiveCharacterMessage
+            {
+                actor = character.actor.id
+            });
+        }
+
 
         public override void Unsubscribe()
         {
+            base.Unsubscribe();
+            _networkManager.SessionStart -= OnSessionStart;
         }
     }
 }

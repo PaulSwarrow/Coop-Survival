@@ -24,7 +24,6 @@ public class GameManager : BaseGameManager
         Register(GetNetworkSystem());
 
         //register objects:
-        Register(FindObjectOfType<GameNetworkManager>());
         Register(GetComponent<PrefabLoader>());
         Register(virtualCamera);
         Register(Camera.main);
