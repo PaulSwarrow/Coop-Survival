@@ -9,21 +9,23 @@ namespace DefaultNamespace
     {
         [Inject] protected GameNetworkManager _networkManager;
         [Inject] protected PlayerControllerSystem userController;
+
         public override void Subscribe()
         {
-            NetworkServer.RegisterHandler<GiveCharacterMessage>(OnCharacterGiven);
-            
+            NetworkClient.RegisterHandler<GiveCharacterMessage>(OnCharacterGiven);
         }
 
         private void OnCharacterGiven(GiveCharacterMessage message)
         {
-            var character = ClientScene.spawnableObjects[message.actor];
-            
+            var character = NetworkIdentity.spawned[message.actor];
+
             userController.SetCharacter(character.GetComponent<GameCharacterActor>());
         }
 
         public override void Unsubscribe()
         {
         }
+
+        public NetworkIdentity Client => NetworkClient.connection.identity;
     }
 }
