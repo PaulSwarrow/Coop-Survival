@@ -13,7 +13,6 @@ namespace DefaultNamespace
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
-            Debug.Log("Client ready" + numPlayers);
             if (numPlayers == 1)
             {
                 SessionStartEvent?.Invoke();

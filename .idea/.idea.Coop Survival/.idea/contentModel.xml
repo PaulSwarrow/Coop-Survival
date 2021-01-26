@@ -8,6 +8,9 @@
       <e p="Assets" t="Include">
         <e p="Libs" t="Include">
           <e p="GameFramework" t="Include">
+            <e p="App" t="Include">
+              <e p="AppManager.cs" t="Include" />
+            </e>
             <e p="DI" t="Include">
               <e p="DependencyContainer.cs" t="Include" />
               <e p="ReflectionTools.cs" t="Include" />
@@ -16,6 +19,7 @@
             <e p="GameSystem.cs" t="Include" />
             <e p="InjectAttribute.cs" t="Include" />
             <e p="Interfaces" t="Include">
+              <e p="IAppModule.cs" t="Include" />
               <e p="IGameSystem.cs" t="Include" />
               <e p="IPoolable.cs" t="Include" />
             </e>
@@ -147,126 +151,6 @@
               <e p="WeaverExceptions.cs" t="Include" />
               <e p="WeaverTypes.cs" t="Include" />
               <e p="Writers.cs" t="Include" />
-            </e>
-          </e>
-          <e p="Examples" t="Include">
-            <e p="AdditiveScenes" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="AdditiveNetworkManager.cs" t="Include" />
-                <e p="PlayerController.cs" t="Include" />
-                <e p="RandomColor.cs" t="Include" />
-                <e p="ShootingTankBehaviour.cs" t="Include" />
-                <e p="ZoneHandler.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Basic" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="BasicNetManager.cs" t="Include" />
-                <e p="Player.cs" t="Include" />
-                <e p="PlayerUI.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Benchmark" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="BenchmarkNetworkManager.cs" t="Include" />
-                <e p="MonsterMovement.cs" t="Include" />
-                <e p="PlayerMovement.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Chat" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="ChatNetworkManager.cs" t="Include" />
-                <e p="ChatWindow.cs" t="Include" />
-                <e p="Player.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Cloud" t="Include">
-              <e p="GUI" t="Include">
-                <e p="Scripts" t="Include">
-                  <e p="ApiUpdater.cs" t="Include" />
-                  <e p="InstantiateNetworkManager.cs" t="Include" />
-                  <e p="Mirror.Examples.Cloud.GUI.asmdef" t="Include" />
-                  <e p="NetworkManagerListServer.cs" t="Include" />
-                  <e p="QuickListServerDebug.cs" t="Include" />
-                  <e p="QuitButtonHUD.cs" t="Include" />
-                  <e p="ServerListManager.cs" t="Include" />
-                  <e p="ServerListUI.cs" t="Include" />
-                  <e p="ServerListUIItem.cs" t="Include" />
-                </e>
-              </e>
-              <e p="PongWithListServer" t="Include">
-                <e p="Scripts" t="Include">
-                  <e p="Ball.cs" t="Include" />
-                  <e p="BallManager.cs" t="Include" />
-                  <e p="Mirror.Examples.Cloud.Pong.asmdef" t="Include" />
-                  <e p="NetworkManagerListServerPong.cs" t="Include" />
-                  <e p="Player.cs" t="Include" />
-                </e>
-              </e>
-            </e>
-            <e p="Mirror.Examples.asmdef" t="Include" />
-            <e p="MultipleAdditiveScenes" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="MultiSceneNetManager.cs" t="Include" />
-                <e p="PhysicsCollision.cs" t="Include" />
-                <e p="PhysicsSimulator.cs" t="Include" />
-                <e p="PlayerController.cs" t="Include" />
-                <e p="PlayerScore.cs" t="Include" />
-                <e p="RandomColor.cs" t="Include" />
-                <e p="Reward.cs" t="Include" />
-                <e p="Spawner.cs" t="Include" />
-              </e>
-            </e>
-            <e p="MultipleMatches" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="CanvasController.cs" t="Include" />
-                <e p="CellGUI.cs" t="Include" />
-                <e p="MatchController.cs" t="Include" />
-                <e p="MatchGUI.cs" t="Include" />
-                <e p="MatchMessages.cs" t="Include" />
-                <e p="MatchNetworkManager.cs" t="Include" />
-                <e p="PlayerGUI.cs" t="Include" />
-                <e p="RoomGUI.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Pong" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="Ball.cs" t="Include" />
-                <e p="NetworkManagerPong.cs" t="Include" />
-                <e p="Player.cs" t="Include" />
-              </e>
-            </e>
-            <e p="RigidbodyPhysics" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="AddForce.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Room" t="Include">
-              <e p="Scripts" t="Include">
-                <e p="NetworkRoomManagerExt.cs" t="Include" />
-                <e p="NetworkRoomPlayerExt.cs" t="Include" />
-                <e p="PlayerController.cs" t="Include" />
-                <e p="PlayerScore.cs" t="Include" />
-                <e p="RandomColor.cs" t="Include" />
-                <e p="Reward.cs" t="Include" />
-                <e p="Spawner.cs" t="Include" />
-              </e>
-            </e>
-            <e p="Tanks" t="Include">
-              <e p="Models" t="Include">
-                <e p="(Public Domain) Recon_Tank" t="Include">
-                  <e p="Recon_Tank - License.txt" t="Include" />
-                </e>
-              </e>
-              <e p="Scripts" t="Include">
-                <e p="Projectile.cs" t="Include" />
-                <e p="Tank.cs" t="Include" />
-              </e>
-              <e p="Textures" t="Include">
-                <e p="(Public Domain) Dirt Hand Painted Texture" t="Include">
-                  <e p="Dirt Hand Painted Texture - License.txt" t="Include" />
-                </e>
-              </e>
             </e>
           </e>
           <e p="Notice.txt" t="Include" />
@@ -592,6 +476,9 @@
           <e p="Version.txt" t="Include" />
         </e>
         <e p="Scripts" t="Include">
+          <e p="App" t="Include">
+            <e p="CoopSurvivalApp.cs" t="Include" />
+          </e>
           <e p="Game" t="Include">
             <e p="Actors" t="Include">
               <e p="GameCharacterActor.cs" t="Include" />
@@ -631,9 +518,6 @@
       <e p="Mirror.Components.csproj" t="IncludeRecursive" />
       <e p="Mirror.csproj" t="IncludeRecursive" />
       <e p="Mirror.Editor.csproj" t="IncludeRecursive" />
-      <e p="Mirror.Examples.Cloud.GUI.csproj" t="IncludeRecursive" />
-      <e p="Mirror.Examples.Cloud.Pong.csproj" t="IncludeRecursive" />
-      <e p="Mirror.Examples.csproj" t="IncludeRecursive" />
       <e p="Mirror.Weaver.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
