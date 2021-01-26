@@ -8,6 +8,10 @@
       <e p="Assets" t="Include">
         <e p="Libs" t="Include">
           <e p="GameFramework" t="Include">
+            <e p="DI" t="Include">
+              <e p="DependencyContainer.cs" t="Include" />
+              <e p="ReflectionTools.cs" t="Include" />
+            </e>
             <e p="GameManager.cs" t="Include" />
             <e p="GameSystem.cs" t="Include" />
             <e p="InjectAttribute.cs" t="Include" />
@@ -26,7 +30,6 @@
             </e>
             <e p="EnumTools.cs" t="Include" />
             <e p="Geometry.cs" t="Include" />
-            <e p="ReflectionTools.cs" t="Include" />
           </e>
         </e>
         <e p="Mirror" t="Include">
