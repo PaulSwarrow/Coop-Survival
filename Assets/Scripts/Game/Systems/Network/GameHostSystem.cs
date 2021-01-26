@@ -4,14 +4,12 @@ using UnityEngine;
 
 namespace DefaultNamespace
 {
-    public class NetworkSessionSystem : GameSystem
+    public class GameHostSystem : GameNetworkSystem
     {
-        [Inject] private NetworkManager _networkManager;
 
         public override void Subscribe()
         {
             Debug.Log(_networkManager);
-            Debug.Log("Game: subscribe");
         }
 
         public override void Start()

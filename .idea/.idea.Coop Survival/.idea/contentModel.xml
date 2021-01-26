@@ -496,7 +496,11 @@
             <e p="Systems" t="Include">
               <e p="GameCharacterSystem.cs" t="Include" />
               <e p="NetObjectSpawnSystem.cs" t="Include" />
-              <e p="NetworkSessionSystem.cs" t="Include" />
+              <e p="Network" t="Include">
+                <e p="GameClientSystem.cs" t="Include" />
+                <e p="GameHostSystem.cs" t="Include" />
+                <e p="GameNetworkSystem.cs" t="Include" />
+              </e>
               <e p="PlayerCameraSystem.cs" t="Include" />
               <e p="PlayerControllerSystem.cs" t="Include" />
               <e p="SaveLoadSystem.cs" t="Include" />

@@ -8,7 +8,7 @@ namespace App
     {
         protected override void RegisterDependencies()
         {
-            Register(NetworkManager.singleton);
+            Register(FindObjectOfType<GameNetworkManager>());
         }
     }
 }

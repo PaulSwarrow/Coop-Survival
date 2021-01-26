@@ -8,6 +8,8 @@ namespace DefaultNamespace
 {
     public class GameNetworkManager : NetworkManager
     {
+        public event Action SessionStart;
+        
         public override void OnServerConnect(NetworkConnection conn)
         {
             Debug.Log("Server: new client");
@@ -26,7 +28,7 @@ namespace DefaultNamespace
             base.OnServerChangeScene(newSceneName);
         }
 
-        public override void OnServerSceneChanged(string sceneName)
+       public override void OnServerSceneChanged(string sceneName)
         {
             Debug.Log("Server: scene loaded");
             base.OnServerSceneChanged(sceneName);

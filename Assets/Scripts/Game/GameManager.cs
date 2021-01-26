@@ -4,6 +4,7 @@ using DefaultNamespace;
 using Game.GameManagerTools;
 using Libs.GameFramework;
 using Libs.GameFramework.Systems;
+using Mirror;
 using UnityEngine;
 
 public class GameManager : BaseGameManager
@@ -11,6 +12,7 @@ public class GameManager : BaseGameManager
     [SerializeField] private CinemachineFreeLook virtualCamera;
 
     public event Action SessionStartEvent;
+
     protected override void RegisterDependencies()
     {
         //register systems:
@@ -19,7 +21,7 @@ public class GameManager : BaseGameManager
         Register<ObjectSpawnSystem>(new NetObjectSpawnSystem());
         // Register(new PlayerCameraSystem());
         Register(new SaveLoadSystem());
-        Register(new NetworkSessionSystem());
+        Register(GetNetworkSystem());
 
         //register objects:
         Register(FindObjectOfType<GameNetworkManager>());
@@ -28,4 +30,10 @@ public class GameManager : BaseGameManager
         Register(Camera.main);
     }
 
+    private GameNetworkSystem GetNetworkSystem()
+    {
+        if (NetworkManager.singleton.mode == NetworkManagerMode.Host)
+            return new GameHostSystem();
+        return new GameClientSystem();
+    }
 }
