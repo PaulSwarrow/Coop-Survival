@@ -10,15 +10,6 @@ namespace DefaultNamespace
     {
         public event Action SessionStartEvent;
 
-        public delegate void ConnectionEventHandler(NetworkConnection connection);
-
-        public override void OnServerConnect(NetworkConnection conn)
-        {
-            base.OnServerConnect(conn);
-        }
-
-        private bool loaded;
-
         public override void OnServerAddPlayer(NetworkConnection conn)
         {
             base.OnServerAddPlayer(conn);
@@ -26,10 +17,12 @@ namespace DefaultNamespace
             if (numPlayers == 1)
             {
                 SessionStartEvent?.Invoke();
-                loaded = true;
             }
 
         }
+        
+        
+        
 
     }
 }
