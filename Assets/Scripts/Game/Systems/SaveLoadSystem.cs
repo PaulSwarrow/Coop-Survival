@@ -9,12 +9,10 @@ namespace DefaultNamespace
 {
     public class SaveLoadSystem : GameSystem
     {
-        [Inject] private GameNetworkManager _networkManager;
         [Inject] private GameCharacterSystem characters;
 
         public override void Subscribe()
         {
-            _networkManager.SessionStartEvent += SpawnCharacters;
         }
 
         public void SpawnCharacters()

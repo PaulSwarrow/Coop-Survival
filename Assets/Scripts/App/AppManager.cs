@@ -4,7 +4,7 @@ using Mirror;
 
 namespace App
 {
-    public class CoopSurvivalApp : AppManager
+    public class AppManager : BaseAppManager
     {
         protected override void RegisterDependencies()
         {
