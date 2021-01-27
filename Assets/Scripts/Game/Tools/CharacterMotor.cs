@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Data;
+using Libs.GameFramework;
+using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,14 +17,13 @@ namespace Game.Tools
             [MovementSpeed.run] = 6,
         };
 
-        private readonly Animator _animator;
-        private readonly NavMeshAgent _agent;
+        [Inject] private NetworkIdentity _identity;
+        [Inject] private Animator _animator;
+        [Inject] private NavMeshAgent _agent;
         private MovementSpeed speed = MovementSpeed.walk;
 
-        public CharacterMotor(Animator animator, NavMeshAgent agent)
+        public CharacterMotor()
         {
-            _animator = animator;
-            _agent = agent;
         }
 
         public bool Aiming
@@ -32,6 +33,8 @@ namespace Game.Tools
 
         public void Update()
         {
+            if(!_identity.hasAuthority) return;
+            
             var localVelocity = _animator.transform.InverseTransformVector(_agent.velocity);
             localVelocity *= ((int) speed / _agent.speed);
 
