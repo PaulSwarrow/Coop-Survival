@@ -19,11 +19,9 @@ namespace DefaultNamespace
         {
             hostBtn.onClick.AddListener(StartAsHost);
             joinBtn.onClick.AddListener(StartAsClient);
-            tabs.TabChangeEvent += OnTab;
-            OnTab();
         }
 
-        private void OnTab()
+        private void Update()
         {
             Transport.activeTransport = tabs.Current.Transport;
             hostBtn.interactable = joinBtn.interactable = tabs.Current.Available;

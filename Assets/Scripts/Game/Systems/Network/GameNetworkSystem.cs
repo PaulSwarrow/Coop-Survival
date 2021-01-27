@@ -12,7 +12,13 @@ namespace DefaultNamespace
 
         public override void Subscribe()
         {
+            _networkManager.ReadyEvent += OnReady; 
             NetworkClient.RegisterHandler<GiveCharacterMessage>(OnCharacterGiven);
+        }
+
+        private void OnReady()
+        {
+            
         }
 
         private void OnCharacterGiven(GiveCharacterMessage message)
@@ -24,6 +30,7 @@ namespace DefaultNamespace
 
         public override void Unsubscribe()
         {
+            _networkManager.ReadyEvent -= OnReady;
         }
 
         public NetworkIdentity Client => NetworkClient.connection.identity;

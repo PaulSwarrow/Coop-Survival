@@ -13,17 +13,17 @@ namespace DefaultNamespace
         public override void Subscribe()
         {
             base.Subscribe();
-            _networkManager.SessionStart += OnSessionStart;
-            _networkManager.PlayerAddedEvent += OnNewPlayer;
+            _networkManager.Server_SessionStart += OnServerSessionStart;
+            _networkManager.Server_PlayerReadyEvent += OnNewServerPlayer;
 
         }
 
-        private void OnSessionStart()
+        private void OnServerSessionStart()
         {
             _saveLoadSystem.SpawnCharacters();
         }
         
-        private void OnNewPlayer(NetworkConnection connection)
+        private void OnNewServerPlayer(NetworkConnection connection)
         {
             if (characters.TryFind(item => item.owner == null, out var character))
             {
@@ -45,7 +45,7 @@ namespace DefaultNamespace
         public override void Unsubscribe()
         {
             base.Unsubscribe();
-            _networkManager.SessionStart -= OnSessionStart;
+            _networkManager.Server_SessionStart -= OnServerSessionStart;
         }
     }
 }

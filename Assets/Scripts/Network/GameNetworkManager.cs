@@ -10,9 +10,11 @@ namespace DefaultNamespace
     {
         public delegate void ConnectionEventDelegate(NetworkConnection connection);
 
-        public event Action SessionStart;
-        public event ConnectionEventDelegate PlayerAddedEvent;
+        public event Action Server_SessionStart;
+        public event ConnectionEventDelegate Server_PlayerReadyEvent;
 
+        public event Action ReadyEvent;
+        
 
         public override void OnServerConnect(NetworkConnection conn)
         {
@@ -42,6 +44,7 @@ namespace DefaultNamespace
         {
             Debug.Log("Client: connected");
             base.OnClientConnect(conn);
+            ReadyEvent?.Invoke();
         }
 
         public override void OnStartHost()
@@ -54,8 +57,8 @@ namespace DefaultNamespace
         {
             Debug.Log("Server: player added");
             base.OnServerAddPlayer(conn);
-            if (numPlayers == 1) SessionStart?.Invoke();
-            PlayerAddedEvent?.Invoke(conn);
+            if (numPlayers == 1) Server_SessionStart?.Invoke();
+            Server_PlayerReadyEvent?.Invoke(conn);
         }
     }
 }
