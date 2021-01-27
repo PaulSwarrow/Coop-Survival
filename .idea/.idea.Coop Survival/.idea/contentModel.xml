@@ -478,6 +478,14 @@
         <e p="Scripts" t="Include">
           <e p="App" t="Include">
             <e p="AppManager.cs" t="Include" />
+            <e p="Ui" t="Include">
+              <e p="Lobby" t="Include">
+                <e p="BaseLobbyTab.cs" t="Include" />
+                <e p="SteamLobbyTab.cs" t="Include" />
+                <e p="TelepathLobbyTab.cs" t="Include" />
+              </e>
+              <e p="LobbyUiTabs.cs" t="Include" />
+            </e>
           </e>
           <e p="Game" t="Include">
             <e p="Actors" t="Include">

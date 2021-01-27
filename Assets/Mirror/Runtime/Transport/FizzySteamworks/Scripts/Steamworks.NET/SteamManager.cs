@@ -105,7 +105,7 @@ public class SteamManager : MonoBehaviour {
 		// https://partner.steamgames.com/doc/sdk/api#initialization_and_shutdown
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
-			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
+			Debug.LogWarning("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
 
 			return;
 		}
@@ -126,7 +126,7 @@ public class SteamManager : MonoBehaviour {
 		if (m_SteamAPIWarningMessageHook == null) {
 			// Set up our callback to receive warning messages from Steam.
 			// You must launch with "-debug_steamapi" in the launch args to receive warnings.
-			m_SteamAPIWarningMessageHook = new SteamAPIWarningMessageHook_t(SteamAPIDebugTextHook);
+			m_SteamAPIWarningMessageHook = SteamAPIDebugTextHook;
 			SteamClient.SetWarningMessageHook(m_SteamAPIWarningMessageHook);
 		}
 	}
