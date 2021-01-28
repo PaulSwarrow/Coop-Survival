@@ -16,7 +16,6 @@ namespace Game.Actors
 
         public Transform cameraTarget { get; private set; }
 
-        public bool Aiming { get; set; }
         // public CharacterMotor motor { get; private set; }
 
         private DependencyContainer dependencyContainer;
@@ -35,6 +34,9 @@ namespace Game.Actors
         //SERVER VARS:
         [SyncVar] private Vector3 _movement;
         [SyncVar] private bool _aiming;
+
+        private InputData inputData;
+        [SyncVar] private InputData _inputData;
 
         private void Awake()
         {
@@ -59,26 +61,40 @@ namespace Game.Actors
 
         private void Update()
         {
+            InputData data;
             if (hasAuthority)
             {
-                SyncUp(agent.velocity, Aiming);
+                data = inputData;
+                if (!inputData.Equals(_inputData))
+                    SyncUp(inputData);
+
+                inputData.movement = Vector3.zero; //safety
             }
             else
             {
-                SyncDown();
+                data = SyncDown();
             }
 
-            var localVelocity = transform.InverseTransformVector(agent.velocity);
+            //apply input
+            agent.velocity = data.movement;
+
+            //animate
+            var localVelocity = transform.InverseTransformVector(data.movement);
             localVelocity *= ((int) speed / agent.speed);
             animator.SetFloat("forward", localVelocity.z);
             animator.SetFloat("strafe", localVelocity.x);
-            animator.SetBool("armed", Aiming);
+            animator.SetBool("armed", data.aim);
         }
 
+        public bool Aiming
+        {
+            get => inputData.aim;
+            set => inputData.aim = value;
+        }
 
         public void Move(Vector3 vector)
         {
-            agent.velocity = vector * agent.speed;
+            inputData.movement = vector * agent.speed;
         }
 
         public void Look(Vector3 forward)
@@ -86,17 +102,21 @@ namespace Game.Actors
             agent.transform.forward = forward;
         }
 
-        private void SyncDown()
+        private InputData SyncDown()
         {
-            agent.velocity = _movement;
-            Aiming = _aiming;
+            return _inputData;
         }
 
         [Command]
-        private void SyncUp(Vector3 movement, bool aim)
+        private void SyncUp(InputData data)
         {
-            _movement = movement;
-            _aiming = aim;
+            _inputData = data;
+        }
+
+        public struct InputData
+        {
+            public Vector3 movement;
+            public bool aim;
         }
     }
 }
