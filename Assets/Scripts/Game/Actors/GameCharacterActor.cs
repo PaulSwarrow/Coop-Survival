@@ -72,15 +72,16 @@ namespace Game.Actors
             }
             else
             {
-                data = SyncDown();
+                inputData = SyncDown();
+                data = inputData;
             }
 
-            //apply input
-            agent.velocity = data.movement;
 
             //animate
             var localVelocity = transform.InverseTransformVector(data.movement);
             localVelocity *= ((int) speed / agent.speed);
+
+
             animator.SetFloat("forward", localVelocity.z);
             animator.SetFloat("strafe", localVelocity.x);
             animator.SetBool("armed", data.aim);
@@ -95,6 +96,8 @@ namespace Game.Actors
         public void Move(Vector3 vector)
         {
             inputData.movement = vector * agent.speed;
+            //apply input
+            agent.velocity = inputData.movement;
         }
 
         public void Look(Vector3 forward)
@@ -104,7 +107,11 @@ namespace Game.Actors
 
         private InputData SyncDown()
         {
-            return _inputData;
+            return new InputData
+            {
+                movement = Vector3.Lerp(_inputData.movement, inputData.movement, 10 * Time.deltaTime),
+                aim = _inputData.aim
+            };
         }
 
         [Command]
