@@ -478,6 +478,9 @@
         <e p="Scripts" t="Include">
           <e p="App" t="Include">
             <e p="AppManager.cs" t="Include" />
+            <e p="Tools" t="Include">
+              <e p="ObjectPropertiesOutput.cs" t="Include" />
+            </e>
             <e p="Ui" t="Include">
               <e p="Lobby" t="Include">
                 <e p="BaseLobbyTab.cs" t="Include" />

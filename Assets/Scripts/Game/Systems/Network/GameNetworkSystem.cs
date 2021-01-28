@@ -1,7 +1,9 @@
-﻿using DefaultNamespace.Messages;
+﻿using App.Tools;
+using DefaultNamespace.Messages;
 using Game.Actors;
 using Libs.GameFramework;
 using Mirror;
+using UnityEngine;
 
 namespace DefaultNamespace
 {
@@ -25,7 +27,8 @@ namespace DefaultNamespace
         {
             var character = NetworkIdentity.spawned[message.actor];
 
-            userController.SetCharacter(character.GetComponent<GameCharacterActor>());
+            var actor = character.GetComponent<GameCharacterActor>();
+            userController.SetCharacter(actor);
         }
 
         public override void Unsubscribe()

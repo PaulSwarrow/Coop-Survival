@@ -18,7 +18,7 @@ namespace DefaultNamespace
         public void SpawnCharacters()
         {
             base.Start();
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 2; i++)
             {
                 characters.CreateCharacter(GetRandomPosition(), Geometry.GetRandomForward());
             }

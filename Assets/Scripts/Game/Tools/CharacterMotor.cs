@@ -16,11 +16,11 @@ namespace Game.Tools
             [MovementSpeed.jog] = 3,
             [MovementSpeed.run] = 6,
         };
+        private MovementSpeed speed = MovementSpeed.walk;
 
         [Inject] private NetworkIdentity _identity;
         [Inject] private Animator _animator;
         [Inject] private NavMeshAgent _agent;
-        private MovementSpeed speed = MovementSpeed.walk;
 
         public CharacterMotor()
         {
