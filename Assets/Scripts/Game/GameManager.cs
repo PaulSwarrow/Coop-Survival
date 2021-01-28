@@ -21,6 +21,7 @@ public class GameManager : BaseGameManager
         Register<ObjectSpawnSystem>(new NetObjectSpawnSystem());
         Register(new PlayerCameraSystem());
         Register(new SaveLoadSystem());
+        Register(new PlayerHudSystem());
         Register(GetNetworkSystem());
 
         //register objects:

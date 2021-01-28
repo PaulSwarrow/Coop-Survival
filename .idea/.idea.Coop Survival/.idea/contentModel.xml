@@ -517,6 +517,7 @@
               </e>
               <e p="PlayerCameraSystem.cs" t="Include" />
               <e p="PlayerControllerSystem.cs" t="Include" />
+              <e p="PlayerHudSystem.cs" t="Include" />
               <e p="SaveLoadSystem.cs" t="Include" />
             </e>
             <e p="Tools" t="Include">
