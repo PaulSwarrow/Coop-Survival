@@ -9,6 +9,14 @@ namespace Game.Actors
 {
     public class GameCharacterActor : NetworkBehaviour
     {
+        public struct InputData
+        {
+            public Vector3 position;
+            public Vector3 forward;
+            public Vector3 movement;
+            public bool aim;
+        }
+
         [SerializeField] private Animator animator;
 
         [SerializeField] private NavMeshAgent agent;
@@ -36,7 +44,7 @@ namespace Game.Actors
         [SyncVar] private bool _aiming;
 
         private InputData inputData;
-        [SyncVar] private InputData _inputData;
+        private InputData _inputData;
 
         private void Awake()
         {
@@ -52,6 +60,11 @@ namespace Game.Actors
             cameraTarget = animator.GetBoneTransform(HumanBodyBones.Chest);
 
             agent.speed = speedValues[speed];
+
+            if (isServer)
+            {
+                _inputData = InitData();
+            }
         }
 
         public void SetAuthority(NetworkConnection connection)
@@ -64,17 +77,27 @@ namespace Game.Actors
             InputData data;
             if (hasAuthority)
             {
+                inputData.forward = transform.forward;
+                inputData.position = transform.position;
+                agent.velocity = inputData.movement;
                 data = inputData;
-                if (!inputData.Equals(_inputData))
+                // if (!inputData.Equals(_inputData))//looks tricky
                     SyncUp(inputData);
 
                 inputData.movement = Vector3.zero; //safety
             }
             else
             {
-                inputData = SyncDown();
+                // inputData = SyncDown();
                 data = inputData;
+
+                agent.velocity = data.movement;
+                transform.position = data.position;
+                // transform.position = Vector3.Lerp(transform.position, data.position, 10 * Time.deltaTime);
+                transform.forward = data.forward;
             }
+
+            //apply input
 
 
             //animate
@@ -96,8 +119,6 @@ namespace Game.Actors
         public void Move(Vector3 vector)
         {
             inputData.movement = vector * agent.speed;
-            //apply input
-            agent.velocity = inputData.movement;
         }
 
         public void Look(Vector3 forward)
@@ -105,25 +126,29 @@ namespace Game.Actors
             agent.transform.forward = forward;
         }
 
-        private InputData SyncDown()
+        private InputData InitData()
         {
             return new InputData
             {
-                movement = Vector3.Lerp(_inputData.movement, inputData.movement, 10 * Time.deltaTime),
-                aim = _inputData.aim
+                position = transform.position,
+                forward = transform.forward
             };
+        }
+
+        [ClientRpc]
+        private void SyncDown(InputData data)
+        {
+            if(hasAuthority) return;
+            // var data = _inputData;
+            data.movement = Vector3.Lerp(data.movement, inputData.movement, 10 * Time.deltaTime);
+            inputData= data;
         }
 
         [Command]
         private void SyncUp(InputData data)
         {
             _inputData = data;
-        }
-
-        public struct InputData
-        {
-            public Vector3 movement;
-            public bool aim;
+            SyncDown(_inputData);
         }
     }
 }
