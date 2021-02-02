@@ -35,6 +35,12 @@ namespace Game.Actors.Components
             animator.Aim = value;
         }
 
+        public void SetSpeed(MovementSpeed value)
+        {
+            speed = value;
+            animator.Speed = value;
+            agent.speed = speedValues[speed];
+        }
         public void Move(Vector3 vector)
         {
             agent.velocity = vector * agent.speed;
@@ -42,7 +48,11 @@ namespace Game.Actors.Components
 
         public void Look(Vector3 forward)
         {
-            agent.transform.forward = forward;
+            animator.Forward = forward;
+            var currentForward = agent.transform.forward;
+            var delta = Vector3.SignedAngle(currentForward, forward, Vector3.up);
+            var q = Quaternion.Euler(0, 10 * delta * Time.deltaTime, 0);
+            agent.transform.forward = q * currentForward;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Game.Actors;
+using Game.Data;
 using Game.Models;
 using Libs.GameFramework;
 using Mirror;
@@ -15,6 +16,7 @@ namespace DefaultNamespace
 
         [Inject] private GameCharacterSystem characterSystem;
         [Inject] private Camera camera;
+        [Inject] private BaseGameManager manager;
 
 
         private GameCharacterActor target;
@@ -41,7 +43,7 @@ namespace DefaultNamespace
 
         public override void Subscribe()
         {
-            GameManager.UpdateEvent += OnUpdate;
+            manager.UpdateEvent += OnUpdate;
         }
 
         private void OnUpdate()
@@ -51,17 +53,26 @@ namespace DefaultNamespace
             var aim = Input.GetButton("Fire2");
             var input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             var q = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
-            var inputVector = q * Vector3.ClampMagnitude(input, 1);
+            var moveVector = q * Vector3.ClampMagnitude(input, 1);
             var lookVector = q * Vector3.forward;
 
-            target.Motor.Move(inputVector);
+            target.Motor.Move(moveVector);
             target.Motor.SetAim(aim);
-            if (aim) target.Motor.Look(lookVector);
+            if (aim)
+            {
+                target.Motor.SetSpeed(MovementSpeed.walk);
+                target.Motor.Look(lookVector);
+            }
+            else
+            {
+                target.Motor.Look(moveVector);
+                target.Motor.SetSpeed(Input.GetButton("Run")? MovementSpeed.run : MovementSpeed.jog);
+            }
         }
 
         public override void Unsubscribe()
         {
-            GameManager.UpdateEvent -= OnUpdate;
+            manager.UpdateEvent -= OnUpdate;
         }
     }
 }

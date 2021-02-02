@@ -12,6 +12,7 @@ namespace Game.Tools
         private static readonly int AimKey = Animator.StringToHash("armed");
         private static readonly int ForwardKey = Animator.StringToHash("forward");
         private static readonly int StrafeKey = Animator.StringToHash("strafe");
+        private static readonly int TurnKey = Animator.StringToHash("turn");
 
         private struct InputData
         {
@@ -25,8 +26,6 @@ namespace Game.Tools
 
         [Inject] private NavMeshAgent agent;
 
-        private MovementSpeed speed = MovementSpeed.walk; //TODO remove hardcode
-
         private void Update()
         {
             if (hasAuthority)
@@ -39,12 +38,15 @@ namespace Game.Tools
             }
 
             var localVelocity = transform.InverseTransformVector(agent.velocity);
-            localVelocity *= ((int) speed / agent.speed);
+            localVelocity *= ((int) Speed / agent.speed);
 
+            var turn = Vector3.SignedAngle(transform.forward, Forward,Vector3.up) / 10;
 
             animator.SetFloat(ForwardKey, localVelocity.z);
             animator.SetFloat(StrafeKey, localVelocity.x);
+            animator.SetFloat(TurnKey, turn);
             animator.SetBool(AimKey, cachedData.aim);
+            
         }
         //API:
         public Transform GetCameraTarget() => animator.GetBoneTransform(HumanBodyBones.Chest);
@@ -53,6 +55,9 @@ namespace Game.Tools
         {
             set => data.aim = value;
         }
+
+        public MovementSpeed Speed { get; set; }//TODO remove hardcode
+        public Vector3 Forward { get; set; }
 
         //SYNC:
         [Command]
