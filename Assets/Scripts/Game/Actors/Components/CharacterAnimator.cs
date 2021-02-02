@@ -51,11 +51,7 @@ namespace Game.Tools
 
         public bool Aim
         {
-            set
-            {
-                if (hasAuthority) return;
-                data.aim = value;
-            }
+            set => data.aim = value;
         }
 
         //SYNC:
