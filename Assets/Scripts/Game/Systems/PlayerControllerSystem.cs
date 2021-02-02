@@ -54,10 +54,9 @@ namespace DefaultNamespace
             var inputVector = q * Vector3.ClampMagnitude(input, 1);
             var lookVector = q * Vector3.forward;
 
-            target.Move(inputVector);
-            target.Aiming = aim;
-            if (aim) target.Look(lookVector);
-
+            target.Motor.Move(inputVector);
+            target.Motor.SetAim(aim);
+            if (aim) target.Motor.Look(lookVector);
         }
 
         public override void Unsubscribe()

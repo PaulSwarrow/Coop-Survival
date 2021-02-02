@@ -21,7 +21,8 @@ namespace Mirror
         static readonly ILogger logger = LogFactory.GetLogger(typeof(NetworkAnimator));
 
         [Header("Authority")]
-        [Tooltip("Set to true if animations come from owner client,  set to false if animations always come from server")]
+        [Tooltip(
+            "Set to true if animations come from owner client,  set to false if animations always come from server")]
         public bool clientAuthority;
 
         /// <summary>
@@ -38,6 +39,7 @@ namespace Mirror
         /// </summary>
         [SyncVar(hook = nameof(onAnimatorSpeedChanged))]
         float animatorSpeed;
+
         float previousSpeed;
 
         // Note: not an object[] array because otherwise initialization is real annoying
@@ -176,6 +178,7 @@ namespace Mirror
                     animationHash[layerId] = 0;
                     return true;
                 }
+
                 return change;
             }
 
@@ -189,10 +192,12 @@ namespace Mirror
                     stateHash = st.fullPathHash;
                     normalizedTime = st.normalizedTime;
                 }
+
                 transitionHash[layerId] = 0;
                 animationHash[layerId] = st.fullPathHash;
                 return true;
             }
+
             return change;
         }
 
@@ -302,11 +307,13 @@ namespace Mirror
                     if (changed)
                         lastBoolParameters[i] = newBoolValue;
                 }
+
                 if (changed)
                 {
                     dirtyBits |= 1ul << i;
                 }
             }
+
             return dirtyBits;
         }
 
@@ -336,6 +343,7 @@ namespace Mirror
                     writer.WriteBoolean(newBoolValue);
                 }
             }
+
             return dirtyBits != 0;
         }
 
@@ -397,11 +405,14 @@ namespace Mirror
                         writer.WriteInt32(st.fullPathHash);
                         writer.WriteSingle(st.normalizedTime);
                     }
+
                     writer.WriteSingle(animator.GetLayerWeight(i));
                 }
+
                 WriteParameters(writer, initialState);
                 return true;
             }
+
             return changed;
         }
 
@@ -528,7 +539,8 @@ namespace Mirror
         #region server message handlers
 
         [Command]
-        void CmdOnAnimationServerMessage(int stateHash, float normalizedTime, int layerId, float weight, byte[] parameters)
+        void CmdOnAnimationServerMessage(int stateHash, float normalizedTime, int layerId, float weight,
+            byte[] parameters)
         {
             // Ignore messages from client if not in client authority mode
             if (!clientAuthority)
@@ -600,7 +612,8 @@ namespace Mirror
         #region client message handlers
 
         [ClientRpc]
-        void RpcOnAnimationClientMessage(int stateHash, float normalizedTime, int layerId, float weight, byte[] parameters)
+        void RpcOnAnimationClientMessage(int stateHash, float normalizedTime, int layerId, float weight,
+            byte[] parameters)
         {
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(parameters))
                 HandleAnimMsg(stateHash, normalizedTime, layerId, weight, networkReader);

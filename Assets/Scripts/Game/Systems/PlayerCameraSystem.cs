@@ -17,7 +17,7 @@ namespace DefaultNamespace
         private void SetTarget()
         {
             vcamera.Follow = playerController.Target.transform;
-            vcamera.LookAt = playerController.Target.cameraTarget;
+            vcamera.LookAt = playerController.Target.CameraTarget;
         }
 
 
