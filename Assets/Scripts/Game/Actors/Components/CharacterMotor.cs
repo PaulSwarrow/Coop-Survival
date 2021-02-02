@@ -24,6 +24,7 @@ namespace Game.Actors.Components
 
         [Inject] private CharacterAnimator animator;
         [Inject] private NavMeshAgent agent;
+        private bool aim;
 
         private void Start()
         {
@@ -32,6 +33,7 @@ namespace Game.Actors.Components
 
         public void SetAim(bool value)
         {
+            aim = value;
             animator.Aim = value;
         }
 
@@ -41,6 +43,7 @@ namespace Game.Actors.Components
             animator.Speed = value;
             agent.speed = speedValues[speed];
         }
+
         public void Move(Vector3 vector)
         {
             agent.velocity = vector * agent.speed;
@@ -49,10 +52,17 @@ namespace Game.Actors.Components
         public void Look(Vector3 forward)
         {
             animator.Forward = forward;
-            var currentForward = agent.transform.forward;
-            var delta = Vector3.SignedAngle(currentForward, forward, Vector3.up);
-            var q = Quaternion.Euler(0, 10 * delta * Time.deltaTime, 0);
-            agent.transform.forward = q * currentForward;
+            if (aim)
+            {
+                agent.transform.forward = forward;
+            }
+            else
+            {
+                var currentForward = agent.transform.forward;
+                var delta = Vector3.SignedAngle(currentForward, forward, Vector3.up);
+                var q = Quaternion.Euler(0, 6 * Time.deltaTime * delta, 0);
+                agent.transform.forward = q * currentForward;
+            }
         }
     }
 }
