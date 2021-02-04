@@ -24,8 +24,6 @@ namespace Game.Tools
 
         [SerializeField] private Animator animator;
 
-        [Inject] private NavMeshAgent agent;
-
         private void Update()
         {
             if (hasAuthority)
@@ -37,8 +35,7 @@ namespace Game.Tools
                 }
             }
 
-            var localVelocity = transform.InverseTransformVector(agent.velocity);
-            localVelocity *= ((int) Speed / agent.speed);
+            var localVelocity = transform.InverseTransformVector(NormalizedVelocity);
 
             var turn = Vector3.SignedAngle(transform.forward, Forward,Vector3.up) / 10;
 
@@ -56,7 +53,7 @@ namespace Game.Tools
             set => data.aim = value;
         }
 
-        public MovementSpeed Speed { get; set; }//TODO remove hardcode
+        public Vector3 NormalizedVelocity { get; set; }//TODO remove hardcode
         public Vector3 Forward { get; set; }
 
         //SYNC:

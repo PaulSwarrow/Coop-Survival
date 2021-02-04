@@ -31,6 +31,11 @@ namespace Game.Actors.Components
             agent.speed = speedValues[speed];
         }
 
+        private void Update()
+        {
+            animator.NormalizedVelocity = agent.velocity * ((int) speed / agent.speed);
+        }
+
         public void SetAim(bool value)
         {
             aim = value;
@@ -40,7 +45,6 @@ namespace Game.Actors.Components
         public void SetSpeed(MovementSpeed value)
         {
             speed = value;
-            animator.Speed = value;
             agent.speed = speedValues[speed];
         }
 
