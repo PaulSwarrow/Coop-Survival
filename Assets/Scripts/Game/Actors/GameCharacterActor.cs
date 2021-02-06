@@ -35,6 +35,7 @@ namespace Game.Actors
             dependencyContainer.Register(GetComponent<NavMeshAgent>());
             dependencyContainer.Register(GetComponent<CharacterAnimator>());
             dependencyContainer.Register(GetComponent<CharacterMotor>());
+            dependencyContainer.Register(GetComponent<ObstacleDetector>());
             dependencyContainer.InjectDependencies();
         }
 

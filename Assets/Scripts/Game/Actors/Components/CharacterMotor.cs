@@ -6,6 +6,7 @@ using Libs.GameFramework;
 using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace Game.Actors.Components
 {
@@ -24,6 +25,7 @@ namespace Game.Actors.Components
 
         [Inject] private CharacterAnimator animator;
         [Inject] private NavMeshAgent agent;
+        [Inject] private ObstacleDetector obstacleDetector;
         private bool aim;
 
         private void Start()
@@ -34,6 +36,7 @@ namespace Game.Actors.Components
         private void Update()
         {
             animator.NormalizedVelocity = agent.velocity * ((int) speed / agent.speed);
+            obstacleDetector.CheckClimbAbility(out var info);
         }
 
         public void SetAim(bool value)
@@ -68,5 +71,7 @@ namespace Game.Actors.Components
                 agent.transform.forward = q * currentForward;
             }
         }
+
+        
     }
 }

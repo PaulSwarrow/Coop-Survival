@@ -496,10 +496,13 @@
                 <e p="CharacterAnimator.cs" t="Include" />
                 <e p="CharacterMotor.cs" t="Include" />
                 <e p="NetworkNavmeshAgent.cs" t="Include" />
+                <e p="ObstacleDetector.cs" t="Include" />
               </e>
               <e p="GameCharacterActor.cs" t="Include" />
             </e>
             <e p="Data" t="Include">
+              <e p="ClimbPointInfo.cs" t="Include" />
+              <e p="ClimbType.cs" t="Include" />
               <e p="MovementSpeed.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
