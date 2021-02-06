@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Game.Data;
 using Game.Tools;
@@ -27,6 +28,7 @@ namespace Game.Actors.Components
         [Inject] private NavMeshAgent agent;
         [Inject] private ObstacleDetector obstacleDetector;
         private bool aim;
+        private Coroutine action;
 
         private void Start()
         {
@@ -36,7 +38,19 @@ namespace Game.Actors.Components
         private void Update()
         {
             animator.NormalizedVelocity = agent.velocity * ((int) speed / agent.speed);
-            obstacleDetector.CheckClimbAbility(out var info);
+
+            if (action == null && obstacleDetector.CheckClimbAbility(out var info))
+            {
+                var hash = Animator.StringToHash("JumpOver");
+                agent.enabled = false;
+                action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
+            }
+        }
+
+        private void OnActionComplete()
+        {
+            agent.enabled = true;
+            action = null;
         }
 
         public void SetAim(bool value)
@@ -71,7 +85,5 @@ namespace Game.Actors.Components
                 agent.transform.forward = q * currentForward;
             }
         }
-
-        
     }
 }

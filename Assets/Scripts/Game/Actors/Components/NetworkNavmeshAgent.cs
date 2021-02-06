@@ -13,6 +13,7 @@ namespace Game.Tools
             public Vector3 velocity;
             public Vector3 position;
             public Vector3 forward;
+            public bool enabled;
         }
 
         private NavMeshAgent agent;
@@ -36,6 +37,7 @@ namespace Game.Tools
                     localData.velocity = agent.velocity;
                     localData.position = agent.transform.position;
                     localData.forward = agent.transform.forward;
+                    localData.enabled = agent.enabled;
                     SyncUp(localData);
                 }
             }
@@ -48,7 +50,9 @@ namespace Game.Tools
 
         private bool DoesNeedSync()
         {
-            return localData.velocity != agent.velocity || localData.forward != agent.transform.forward;
+            return localData.velocity != agent.velocity
+                   || localData.forward != agent.transform.forward
+                   || localData.enabled != agent.enabled;
         }
 
         [Command]
@@ -65,6 +69,7 @@ namespace Game.Tools
             localData = data;
             agent.transform.position = data.position;
             agent.transform.forward = data.forward;
+            agent.enabled = data.enabled;
             requiredVelocity = data.velocity;
         }
     }
