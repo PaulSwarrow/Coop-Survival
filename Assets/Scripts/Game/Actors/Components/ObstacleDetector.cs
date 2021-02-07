@@ -1,4 +1,4 @@
-﻿using Game.Data;
+using Game.Data;
 using Libs.GameFramework;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,6 +13,7 @@ namespace Game.Actors.Components
         
         [SerializeField]private float height = 2;
 
+        private float radius = .5f;
         public bool CheckClimbAbility(out ClimbPointInfo info)
         {
             if (TryFindEdge(out var edgeHit))
@@ -50,12 +51,11 @@ namespace Game.Actors.Components
         {
             var currentHeight = minHeight;
 
-            var r = 1;
             while (currentHeight < maxHeight)
             {
                 var point = transform.position;
-                currentHeight += r;
-                point.y = currentHeight;
+                currentHeight += radius;
+                point.y += currentHeight;
                 if (Physics.SphereCast(point, r, transform.forward, out var hit, 1))
                 {
                     if (hit.normal.y > 0) //edge
