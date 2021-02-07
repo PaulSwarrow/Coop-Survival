@@ -1,7 +1,12 @@
-﻿namespace Game.Configs
+﻿using UnityEngine;
+
+namespace Game.Configs
 {
-    public class ParkourConfig
+    [CreateAssetMenu(fileName ="ParkourMotionList", menuName = "Game/ParkourMotionList")]
+    public class ParkourConfig : ScriptableObject
     {
+        
+     
         
     }
 }

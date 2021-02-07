@@ -7,11 +7,11 @@ namespace Game.Actors.Components
 {
     public class ObstacleDetector : MonoBehaviour
     {
-        [Inject] private NavMeshAgent agent;
-
         private float stepHeight = .4f;
         private float minHeight => stepHeight;
         private float maxHeight = 2.4f;
+        
+        [SerializeField]private float height = 2;
 
         public bool CheckClimbAbility(out ClimbPointInfo info)
         {
@@ -20,13 +20,13 @@ namespace Game.Actors.Components
                 if (CheckCanEntry(edgeHit.point))
                 {
                     var startPoint = edgeHit.point;
-                    startPoint.y = agent.transform.position.y;
+                    startPoint.y = transform.position.y;
 
                     var forwardVector = -edgeHit.normal;
                     forwardVector.y = 0;
                     forwardVector.Normalize();
 
-                    var climbHeight = edgeHit.point.y - agent.transform.position.y;
+                    var climbHeight = edgeHit.point.y - transform.position.y;
 
 
                     var climbType = GetClimbType(edgeHit.point, forwardVector);
@@ -73,7 +73,7 @@ namespace Game.Actors.Components
         private bool CheckCanEntry(Vector3 edgePoint)
         {
             //check can climb
-            return Physics.CheckCapsule(edgePoint + Vector3.up * .1f, edgePoint + Vector3.up * agent.height, 1);
+            return Physics.CheckCapsule(edgePoint + Vector3.up * .1f, edgePoint + Vector3.up * height, 1);
         }
 
         private ClimbType GetClimbType(Vector3 edgePoint, Vector3 climbVector)

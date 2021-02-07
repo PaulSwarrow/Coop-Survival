@@ -25,26 +25,28 @@ namespace Game.Actors.Components
 
 
         [Inject] private CharacterAnimator animator;
-        [Inject] private NavMeshAgent agent;
+
+        // [Inject] private NavMeshAgent agent;
+        [Inject] private SmartCharacterController agent;
         [Inject] private ObstacleDetector obstacleDetector;
         private bool aim;
         private Coroutine action;
 
         private void Start()
         {
-            agent.speed = speedValues[speed];
+            // agent.speed = speedValues[speed];
         }
 
         private void Update()
         {
-            animator.NormalizedVelocity = agent.velocity * ((int) speed / agent.speed);
+            animator.NormalizedVelocity = agent.Velocity.normalized * ((int) speed);
 
-            if (action == null && obstacleDetector.CheckClimbAbility(out var info))
-            {
-                var hash = Animator.StringToHash("JumpOver");
-                agent.enabled = false;
-                action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
-            }
+            // if (action == null && obstacleDetector.CheckClimbAbility(out var info))
+            // {
+            //     var hash = Animator.StringToHash("JumpOver");
+            //     agent.enabled = false;
+            //     action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
+            // }
         }
 
         private void OnActionComplete()
@@ -62,12 +64,12 @@ namespace Game.Actors.Components
         public void SetSpeed(MovementSpeed value)
         {
             speed = value;
-            agent.speed = speedValues[speed];
+            // agent.speed = speedValues[speed];
         }
 
         public void Move(Vector3 vector)
         {
-            agent.velocity = vector * agent.speed;
+            agent.Move(vector * (speedValues[speed] * Time.deltaTime));
         }
 
         public void Look(Vector3 forward)
