@@ -34,11 +34,11 @@ namespace Game.Actors.Components
                     var normale = (origin - ray.origin).normalized;
                     normaleSumm += normale;
                     safe++;
-                    Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
+                    // Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
                 }
                 else
                 {
-                    Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.red);
+                    // Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.red);
                 }
             }
 
@@ -56,7 +56,7 @@ namespace Game.Actors.Components
                 safeGround = true;
             }
 
-            if (controller.isGrounded) virtualVelocity.y = 0;
+            if (controller.isGrounded) virtualVelocity.y = -1;
             controller.Move(virtualVelocity * Time.deltaTime);
         }
 

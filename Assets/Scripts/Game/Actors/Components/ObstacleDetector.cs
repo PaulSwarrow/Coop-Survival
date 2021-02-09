@@ -1,3 +1,4 @@
+﻿using System;
 using Game.Data;
 using Libs.GameFramework;
 using UnityEngine;
@@ -7,19 +8,27 @@ namespace Game.Actors.Components
 {
     public class ObstacleDetector : MonoBehaviour
     {
-        private float stepHeight = .4f;
-        private float minHeight => stepHeight;
-        private float maxHeight = 2.4f;
-        
-        [SerializeField]private float height = 2;
+        private bool show;
+        private Vector3 gizmoPoint;
 
-        private float radius = .5f;
+        [SerializeField] private float characterHeight = 2;
+
+        [SerializeField] private float stepHeight = .4f;
+        [SerializeField] private float maxHeight = 2.4f;
+        [SerializeField] private float radius = .5f;
+        [SerializeField] private float maxHorizontalAngle = 35;
+        private float minHeight => stepHeight;
+
+
         public bool CheckClimbAbility(out ClimbPointInfo info)
         {
-            if (TryFindEdge(out var edgeHit))
+            info = default;
+            show = true;
+            if (TryFindEdge(out var edgeHit, out var hitCenter))
             {
-                if (CheckCanEntry(edgeHit.point))
+                if (CheckCanEnter(edgeHit.point))
                 {
+                    var availableHeight = GetHeightAvailable(hitCenter);
                     var startPoint = edgeHit.point;
                     startPoint.y = transform.position.y;
 
@@ -27,7 +36,13 @@ namespace Game.Actors.Components
                     forwardVector.y = 0;
                     forwardVector.Normalize();
 
-                    var climbHeight = edgeHit.point.y - transform.position.y;
+                    var deltaAngle = Vector3.Angle(transform.forward, forwardVector);
+                    if (deltaAngle > maxHorizontalAngle)
+                    {
+                        return false;
+                    }
+
+                    // var climbHeight = edgeHit.point.y - transform.position.y;
 
 
                     var climbType = GetClimbType(edgeHit.point, forwardVector);
@@ -37,43 +52,56 @@ namespace Game.Actors.Components
                     {
                         startPoint = startPoint,
                         climbType = climbType,
-                        climbHeight = climbHeight
+                        climbHeight = availableHeight
                     };
                     return true;
                 }
             }
 
-            info = default;
+            // show = false;
+
             return false;
         }
 
-        private bool TryFindEdge(out RaycastHit edgeHit)
+        private float GetHeightAvailable(Vector3 hitCenter)
+        {
+            var ray = new Ray(hitCenter, Vector3.down);
+            return Physics.Raycast(ray, out var hit, maxHeight) ? hit.distance : maxHeight;
+        }
+
+        private bool TryFindEdge(out RaycastHit edgeHit, out Vector3 hitCenter)
         {
             var currentHeight = minHeight;
+            var forward = transform.forward;
 
             while (currentHeight < maxHeight)
             {
                 var point = transform.position;
                 currentHeight += radius;
                 point.y += currentHeight;
-                if (Physics.SphereCast(point, r, transform.forward, out var hit, 1))
+                if (Physics.SphereCast(point, radius, forward, out var hit, radius))
                 {
-                    if (hit.normal.y > 0) //edge
+                    gizmoPoint = point + forward * hit.distance;
+                    if (hit.normal.y > 0.01f) //edge
                     {
                         edgeHit = hit;
+                        hitCenter = point + forward * hit.distance;
                         return true;
                     }
                 }
+                
+                gizmoPoint = point + forward * radius;
             }
 
             edgeHit = default;
+            hitCenter = default;
             return false;
         }
 
-        private bool CheckCanEntry(Vector3 edgePoint)
+        private bool CheckCanEnter(Vector3 edgePoint)
         {
             //check can climb
-            return Physics.CheckCapsule(edgePoint + Vector3.up * .1f, edgePoint + Vector3.up * height, 1);
+            return Physics.CheckCapsule(edgePoint + Vector3.up * .1f, edgePoint + Vector3.up * characterHeight, 1);
         }
 
         private ClimbType GetClimbType(Vector3 edgePoint, Vector3 climbVector)
@@ -93,40 +121,9 @@ namespace Game.Actors.Components
             return ClimbType.UpTo;
         }
 
-        /*public void TryClimbObstacle(RaycastHit hit, Transform character)
+        private void OnDrawGizmos()
         {
-            var stepHeight = .4f;
-            var startPoint = hit.point;
-            startPoint.y = character.transform.position.y;
-
-            var forward = -hit.normal;
-            forward.y = 0;
-            forward.Normalize();
-
-            var climbingHeight = hit.point.y - startPoint.y;
-
-            var edge = startPoint + Vector3.up * climbingHeight;
-
-            //check can climb
-            if (Physics.CheckCapsule(edge + Vector3.up * .1f, edge + Vector3.up * agent.height, 1))
-            {
-                //check floor size
-                for (var deep = 0f; deep < .5f; deep += .1f)
-                {
-                    var point = Vector3.up + edge + forward * deep;
-                    Debug.DrawLine(point, point + Vector3.down * (1 + stepHeight));
-                    if (!Physics.Raycast(point, Vector3.down, 1 + stepHeight))
-                    {
-                        //select animation from climg height;
-                        Debug.DrawRay(edge, forward, Color.green);
-                        return;
-                    }
-                }
-
-
-                //select animation from climg height;
-                Debug.DrawRay(edge, forward, Color.blue);
-            }
-        }*/
+            if (show) Gizmos.DrawWireSphere(gizmoPoint, radius);
+        }
     }
 }

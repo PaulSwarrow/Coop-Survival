@@ -41,12 +41,12 @@ namespace Game.Actors.Components
         {
             animator.NormalizedVelocity = agent.Velocity.normalized * ((int) speed);
 
-            // if (action == null && obstacleDetector.CheckClimbAbility(out var info))
-            // {
-            //     var hash = Animator.StringToHash("JumpOver");
-            //     agent.enabled = false;
-            //     action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
-            // }
+             if (action == null && obstacleDetector.CheckClimbAbility(out var info))
+            {
+                 var hash = Animator.StringToHash("JumpOver");
+                 agent.enabled = false;
+                 action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
+            }
         }
 
         private void OnActionComplete()
