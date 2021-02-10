@@ -40,19 +40,6 @@ namespace Game.Actors.Components
         private void Update()
         {
             animator.NormalizedVelocity = agent.Velocity.normalized * ((int) speed);
-
-             if (action == null && obstacleDetector.CheckClimbAbility(out var info))
-            {
-                 var hash = Animator.StringToHash("JumpOver");
-                 agent.enabled = false;
-                 action = StartCoroutine(animator.ActionCoroutine(0, hash, true, OnActionComplete));
-            }
-        }
-
-        private void OnActionComplete()
-        {
-            agent.enabled = true;
-            action = null;
         }
 
         public void SetAim(bool value)
@@ -87,5 +74,18 @@ namespace Game.Actors.Components
                 agent.transform.forward = q * currentForward;
             }
         }
+
+        public void ClimbMotion(ParkourMotion motion, ClimbPointInfo climbInfo)
+        {
+            if(action != null) return;
+            action = StartCoroutine(animator.ActionCoroutine(0, motion.AnimationHash, true, OnActionComplete));
+        }
+        
+        private void OnActionComplete()
+        {
+            agent.enabled = true;
+            action = null;
+        }
+
     }
 }

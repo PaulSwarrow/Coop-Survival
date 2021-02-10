@@ -1,7 +1,10 @@
 ﻿using System;
+using App;
 using Game.Actors;
+using Game.Configs;
 using Game.Data;
 using Game.Models;
+using Lib.UnityQuickTools.Collections;
 using Libs.GameFramework;
 using Mirror;
 using UnityEngine;
@@ -20,10 +23,13 @@ namespace DefaultNamespace
 
 
         private GameCharacterActor target;
+        private ParkourConfig parkourConfig;
         public GameCharacterActor Target => target; //hide by interface?
+
 
         public override void Init()
         {
+            parkourConfig = AppManager.current.resources.GetParkourConfig();
         }
 
 
@@ -65,8 +71,19 @@ namespace DefaultNamespace
             }
             else
             {
+                if ( target.ObstacleDetector.CheckClimbAbility(out var climbInfo))
+                {
+                    if (Input.GetButtonDown("Jump"))
+                    {
+                        if (parkourConfig.climbing.TryFind(item => item.Match(climbInfo), out var motion))
+                        {
+                            target.Motor.ClimbMotion(motion, climbInfo);
+                        }
+                    }
+                }
+
                 target.Motor.Look(moveVector);
-                target.Motor.SetSpeed(Input.GetButton("Run")? MovementSpeed.run : MovementSpeed.jog);
+                target.Motor.SetSpeed(Input.GetButton("Run") ? MovementSpeed.run : MovementSpeed.jog);
             }
         }
 

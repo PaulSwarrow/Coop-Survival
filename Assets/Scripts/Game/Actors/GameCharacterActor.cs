@@ -16,13 +16,11 @@ namespace Game.Actors
         public uint id => netIdentity.netId;
 
         public Transform CameraTarget => animator.GetCameraTarget();
-        public CharacterMotor Motor => motor;
-
-        // public CharacterMotor motor { get; private set; }
 
         private DependencyContainer dependencyContainer;
 
-        [Inject] private CharacterMotor motor;
+        [Inject] public CharacterMotor Motor { get; private set; }
+        [Inject] public ObstacleDetector ObstacleDetector { get; private set; }
         [Inject] private CharacterAnimator animator;
 
         private void Awake()

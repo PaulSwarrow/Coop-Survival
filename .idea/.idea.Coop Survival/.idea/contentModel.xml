@@ -495,6 +495,10 @@
         <e p="Scripts" t="Include">
           <e p="App" t="Include">
             <e p="AppManager.cs" t="Include" />
+            <e p="Modules" t="Include">
+              <e p="GizmoDrawer.cs" t="Include" />
+              <e p="ResourcesProvider.cs" t="Include" />
+            </e>
             <e p="Tools" t="Include">
               <e p="ObjectPropertiesOutput.cs" t="Include" />
             </e>
