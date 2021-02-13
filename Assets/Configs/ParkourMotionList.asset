@@ -13,8 +13,18 @@ MonoBehaviour:
   m_Name: ParkourMotionList
   m_EditorClassIdentifier: 
   climbing:
-  - Animation: JumpOver
+  - Animation: Jump Over
     MinHeight: 0.4
     MaxHeight: 1.4
     StartOffset: {x: 0, y: 0.13, z: -1}
     ClimbType: 0
+  - Animation: Jump UpTo
+    MinHeight: 0.4
+    MaxHeight: 1.4
+    StartOffset: {x: 0, y: 0.13, z: -1}
+    ClimbType: 1
+  - Animation: Climb UpTo
+    MinHeight: 1.4
+    MaxHeight: 2.6
+    StartOffset: {x: 0, y: 0.13, z: -1}
+    ClimbType: 1
