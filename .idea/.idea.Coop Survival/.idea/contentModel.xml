@@ -521,9 +521,11 @@
                 <e p="ObstacleDetector.cs" t="Include" />
               </e>
               <e p="GameCharacterActor.cs" t="Include" />
+              <e p="WeaponActor.cs" t="Include" />
             </e>
             <e p="Configs" t="Include">
               <e p="ParkourConfig.cs" t="Include" />
+              <e p="WeaponConfig.cs" t="Include" />
             </e>
             <e p="Data" t="Include">
               <e p="AnimationCallData.cs" t="Include" />
@@ -532,6 +534,7 @@
               <e p="MovementSpeed.cs" t="Include" />
               <e p="ParkourMotion.cs" t="Include" />
               <e p="PositionSyncData.cs" t="Include" />
+              <e p="WeaponHoldingType.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
             <e p="GameManagerTools" t="Include">
@@ -539,6 +542,7 @@
             </e>
             <e p="Models" t="Include">
               <e p="GameCharacter.cs" t="Include" />
+              <e p="WeaponModel.cs" t="Include" />
             </e>
             <e p="Systems" t="Include">
               <e p="GameCharacterSystem.cs" t="Include" />

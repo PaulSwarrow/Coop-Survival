@@ -557,7 +557,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea2a4de8a994e6c8fa8d360c9f5bc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parkourConfig: {fileID: 11400000, guid: eabae3167745ea34faecd77042f83f59, type: 2}
 --- !u!1001 &169169791928697977
 PrefabInstance:
   m_ObjectHideFlags: 0

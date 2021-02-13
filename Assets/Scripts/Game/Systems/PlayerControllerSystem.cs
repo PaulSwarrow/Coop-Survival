@@ -29,7 +29,7 @@ namespace DefaultNamespace
 
         public override void Init()
         {
-            parkourConfig = AppManager.current.resources.GetParkourConfig();
+            parkourConfig = AppManager.current.resources.parkourConfig;
         }
 
 
