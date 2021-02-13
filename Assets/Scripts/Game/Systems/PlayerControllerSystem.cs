@@ -71,14 +71,13 @@ namespace DefaultNamespace
             }
             else
             {
-                if ( target.ObstacleDetector.CheckClimbAbility(out var climbInfo))
+                if (Input.GetButtonDown("Jump") && target.ObstacleDetector.CheckClimbAbility(out var climbInfo))
                 {
-                    if (Input.GetButtonDown("Jump"))
+                    //TODO better motion selection (distance and speed based)
+                    //TODO motion ranking (for character upgrades)
+                    if (parkourConfig.climbing.TryFind(item => item.Match(climbInfo), out var motion))
                     {
-                        if (parkourConfig.climbing.TryFind(item => item.Match(climbInfo), out var motion))
-                        {
-                            target.Motor.ClimbMotion(motion, climbInfo);
-                        }
+                        target.Motor.ClimbMotion(motion, climbInfo);
                     }
                 }
 

@@ -108,6 +108,9 @@ namespace Game.Tools
 
         private IEnumerator ActionCoroutine(AnimationCallData data)
         {
+            //TODO: add blending curves
+            //TODO ik points
+            //TODO smooth fade out
             InAction = true;
             float fadeInNTime = .051f;
             float fadeOutNTime = .25f;
@@ -119,6 +122,7 @@ namespace Game.Tools
 
             var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
 
+            //TODO cache transforms
             var actualPosition = animator.transform.position;
             var actualRotation = animator.transform.rotation;
 

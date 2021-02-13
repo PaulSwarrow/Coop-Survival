@@ -26,5 +26,5 @@ MonoBehaviour:
   - Animation: Climb UpTo
     MinHeight: 1.4
     MaxHeight: 2.6
-    StartOffset: {x: 0, y: 0.13, z: -1}
+    StartOffset: {x: 0, y: 0.13, z: -2}
     ClimbType: 1
