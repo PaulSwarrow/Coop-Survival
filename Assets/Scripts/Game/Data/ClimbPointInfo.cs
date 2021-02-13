@@ -7,5 +7,6 @@ namespace Game.Data
         public Vector3 startPoint;
         public ClimbType climbType;
         public float climbHeight;
+        public Vector3 normale;
     }
 }

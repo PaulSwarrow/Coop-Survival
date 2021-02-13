@@ -9,7 +9,7 @@ namespace Game.Data
         public string Animation;
         public float MinHeight;
         public float MaxHeight;
-        public float StartOffset;
+        public Vector3 StartOffset;
         public ClimbType ClimbType;
 
         private int animationHash;

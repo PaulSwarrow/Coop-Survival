@@ -1,24 +1,17 @@
-﻿using System;
-using Game.Data;
-using Libs.GameFramework;
+﻿using Game.Data;
 using Mirror;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Game.Tools
+namespace Game.Actors.Components
 {
-    public class NetworkNavmeshAgent : NetworkBehaviour
+    public abstract class BaseActorPositionHandler : NetworkBehaviour
     {
-
-        private NavMeshAgent agent;
-
         private PositionSyncData _localPositionSyncData;
         private PositionSyncData _cachedPositionSyncData;
         private PositionSyncData _serverPositionSyncData;
 
         private void Awake()
         {
-            agent = GetComponent<NavMeshAgent>();
             _localPositionSyncData.forward = transform.forward;
         }
 
@@ -26,9 +19,7 @@ namespace Game.Tools
         {
             if (hasAuthority)
             {
-                _localPositionSyncData.velocity = agent.velocity;
-                _localPositionSyncData.forward = agent.transform.forward;
-                _localPositionSyncData.enabled = agent.enabled;
+                WriteData(ref _localPositionSyncData);
                 if (DoesNeedSync())
                 {
                     _cachedPositionSyncData = _localPositionSyncData;
@@ -37,8 +28,17 @@ namespace Game.Tools
             }
             else
             {
-                agent.velocity = Vector3.Lerp(agent.velocity, _localPositionSyncData.velocity, 10 * Time.deltaTime);
+                SyncLateUpdate(ref _localPositionSyncData);
             }
+        }
+
+
+        protected abstract void WriteData(ref PositionSyncData data);
+        protected abstract void ApplyData(ref PositionSyncData data, Vector3 position);
+
+        protected virtual void SyncLateUpdate(ref PositionSyncData data)
+        {
+            
         }
 
 
@@ -59,10 +59,8 @@ namespace Game.Tools
         {
             if (hasAuthority) return;
             _localPositionSyncData = positionSyncData;
-            agent.transform.position = position;
-            agent.transform.forward = positionSyncData.forward;
-            agent.enabled = positionSyncData.enabled;
+            
+            ApplyData(ref _localPositionSyncData, position);
         }
-        
     }
 }

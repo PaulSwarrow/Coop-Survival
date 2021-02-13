@@ -15,6 +15,7 @@ namespace Game.Actors.Components
         [SerializeField] private float maxHeight = 2.4f;
         [SerializeField] private float radius = .5f;
         [SerializeField] private float maxHorizontalAngle = 35;
+        [SerializeField] private float scanDistance = 2;
         private float minHeight => stepHeight;
 
 
@@ -26,7 +27,7 @@ namespace Game.Actors.Components
                 if (CheckCanEnter(edgeHit.point, hitCenter, out var availableHeight))
                 {
                     var startPoint = edgeHit.point;
-                    startPoint.y = transform.position.y;
+                    startPoint.y = Mathf.Max(transform.position.y, edgeHit.point.y - availableHeight);
 
                     var forwardVector = -edgeHit.normal;
                     forwardVector.y = 0;
@@ -49,7 +50,8 @@ namespace Game.Actors.Components
                     {
                         startPoint = startPoint,
                         climbType = climbType,
-                        climbHeight = availableHeight
+                        climbHeight = availableHeight,
+                        normale = forwardVector
                     };
                     return true;
                 }
@@ -70,7 +72,7 @@ namespace Game.Actors.Components
                 var point = transform.position;
                 currentHeight += radius;
                 point.y += currentHeight;
-                if (Physics.SphereCast(point, radius, forward, out var hit, 1))
+                if (Physics.SphereCast(point, radius, forward, out var hit, scanDistance))
                 {
                     if (hit.normal.y > 0.01f) //edge
                     {
@@ -108,7 +110,6 @@ namespace Game.Actors.Components
                     climbHeight = (edgePoint - transform.position).y;
                     return true;
                 }
-
             }
 
             climbHeight = default;

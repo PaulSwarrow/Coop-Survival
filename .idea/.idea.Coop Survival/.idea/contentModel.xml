@@ -496,7 +496,6 @@
           <e p="App" t="Include">
             <e p="AppManager.cs" t="Include" />
             <e p="Modules" t="Include">
-              <e p="GizmoDrawer.cs" t="Include" />
               <e p="ResourcesProvider.cs" t="Include" />
             </e>
             <e p="Tools" t="Include">
@@ -514,11 +513,12 @@
           <e p="Game" t="Include">
             <e p="Actors" t="Include">
               <e p="Components" t="Include">
+                <e p="BaseActorPositionHandler.cs" t="Include" />
                 <e p="CharacterAnimator.cs" t="Include" />
                 <e p="CharacterMotor.cs" t="Include" />
+                <e p="GameCharacterController.cs" t="Include" />
                 <e p="NetworkNavmeshAgent.cs" t="Include" />
                 <e p="ObstacleDetector.cs" t="Include" />
-                <e p="SmartCharacterController.cs" t="Include" />
               </e>
               <e p="GameCharacterActor.cs" t="Include" />
             </e>
@@ -530,6 +530,7 @@
               <e p="ClimbType.cs" t="Include" />
               <e p="MovementSpeed.cs" t="Include" />
               <e p="ParkourMotion.cs" t="Include" />
+              <e p="PositionSyncData.cs" t="Include" />
             </e>
             <e p="GameManager.cs" t="Include" />
             <e p="GameManagerTools" t="Include">

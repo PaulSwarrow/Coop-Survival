@@ -27,7 +27,7 @@ namespace Game.Actors.Components
         [Inject] private CharacterAnimator animator;
 
         // [Inject] private NavMeshAgent agent;
-        [Inject] private SmartCharacterController agent;
+        [Inject] private GameCharacterController agent;
         [Inject] private ObstacleDetector obstacleDetector;
         private bool aim;
         private Coroutine action;
@@ -77,15 +77,23 @@ namespace Game.Actors.Components
 
         public void ClimbMotion(ParkourMotion motion, ClimbPointInfo climbInfo)
         {
-            if(action != null) return;
-            action = StartCoroutine(animator.ActionCoroutine(0, motion.AnimationHash, true, OnActionComplete));
-        }
-        
-        private void OnActionComplete()
-        {
-            agent.enabled = true;
-            action = null;
+            if (action != null) return;
+
+            var q = Quaternion.LookRotation(climbInfo.normale, Vector3.up);
+            var startPoint = climbInfo.startPoint + q * motion.StartOffset;
+            agent.Active = false;
+            action = StartCoroutine(animator.ActionCoroutine(0,
+                motion.AnimationHash,
+                true,
+                startPoint,
+                q,
+                OnActionComplete));
         }
 
+        private void OnActionComplete()
+        {
+            agent.Active = true;
+            action = null;
+        }
     }
 }

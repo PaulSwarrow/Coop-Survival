@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using DG.Tweening;
 using Game.Data;
 using Game.View;
 using Libs.GameFramework;
@@ -68,14 +69,27 @@ namespace Game.Tools
         public Vector3 Forward { get; set; }
 
 
-        public IEnumerator ActionCoroutine(int layer, int stateNameHash, bool rootMotion, Action callback)
+        public IEnumerator ActionCoroutine(int layer, int stateNameHash, bool rootMotion, Vector3 startPosition, Quaternion startRotation, Action callback)
         {
-            float fadeInNTime = .1f;
-            float fadeOutNTime = .15f;
+            float fadeInNTime = .051f;
+            float fadeOutNTime = .25f;
             var cachedState = animator.GetCurrentAnimatorStateInfo(layer);
+            var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
+
+            var actualPosition = animator.transform.position;
+            var actualRotation = animator.transform.rotation;
+            
+            transform.position = startPosition;
+            transform.rotation = startRotation;
+            
+            animator.transform.position = actualPosition;
+            animator.transform.rotation = actualRotation;
+            
+            animator.transform.DOLocalMove(Vector3.zero, duration * .1f);
+            animator.transform.DOLocalRotateQuaternion(Quaternion.identity, duration * .1f);
+            
             animator.CrossFade(stateNameHash, fadeInNTime, layer);
 
-            var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
 
             this.rootMotion = rootMotion;
 
@@ -85,6 +99,7 @@ namespace Game.Tools
 
             yield return new WaitForSeconds(fadeOutNTime);
             this.rootMotion = false;
+
 
             callback();
         }
