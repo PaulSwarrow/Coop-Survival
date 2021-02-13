@@ -113,6 +113,10 @@ namespace Game.Tools
             float fadeInNTime = .051f;
             float fadeOutNTime = .25f;
             var cachedState = animator.GetCurrentAnimatorStateInfo(data.layer);
+            if (cachedState.shortNameHash == data.hash)
+            {
+                Debug.LogError("Actions overlap");
+            }
             var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
 
             var actualPosition = animator.transform.position;
@@ -136,8 +140,12 @@ namespace Game.Tools
 
             animator.CrossFade(cachedState.fullPathHash, fadeOutNTime, data.layer);
 
+            yield return new WaitUntil(() =>
+            {
+                return animator.GetCurrentAnimatorStateInfo(data.layer).shortNameHash == cachedState.shortNameHash;
+            });
             //TODO it seems coroutine ends too early (can cause freeze if called one after another)
-            yield return new WaitForSeconds(fadeOutNTime*duration);
+            // yield return new WaitForSeconds(fadeOutNTime*duration);
             rootMotion = false;
         }
 
