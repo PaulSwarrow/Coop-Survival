@@ -40,7 +40,7 @@ namespace Game.Actors.Components
         private void Update()
         {
             animator.Velocity = agent.Velocity;
-        }    
+        }
 
         public void SetAim(bool value)
         {
@@ -82,12 +82,14 @@ namespace Game.Actors.Components
             var q = Quaternion.LookRotation(climbInfo.normale, Vector3.up);
             var startPoint = climbInfo.startPoint + q * motion.StartOffset;
             agent.Active = false;
-            action = StartCoroutine(animator.ActionCoroutine(0,
-                motion.AnimationHash,
-                true,
-                startPoint,
-                q,
-                OnActionComplete));
+            animator.PlayMotion(new AnimationCallData
+                {
+                    layer = 0,
+                    hash = motion.AnimationHash,
+                    position = startPoint,
+                    rotation = q
+                },
+                OnActionComplete);
         }
 
         private void OnActionComplete()

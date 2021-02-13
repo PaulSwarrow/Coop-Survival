@@ -68,19 +68,58 @@ namespace Game.Tools
         public Vector3 Velocity { get; set; } //TODO remove hardcode
         public Vector3 Forward { get; set; }
 
+        public void PlayMotion(int layer, int hash, Action callback)
+        {
+            var data = new AnimationCallData
+            {
+                layer = layer,
+                hash = hash,
+                position = transform.position,
+                rotation = transform.rotation
+            };
+            PlayMotion(data, callback);
+        }
+        
+        public void PlayMotion(AnimationCallData data, Action callback)
+        {
+            PlayMotionCommand(data);
+            StartCoroutine(CoroutineWrapper(ActionCoroutine(data), callback));
+        }
 
-        public IEnumerator ActionCoroutine(int layer, int stateNameHash, bool rootMotion, Vector3 startPosition, Quaternion startRotation, Action callback)
+        [Command]
+        private void PlayMotionCommand(AnimationCallData data)
+        {
+            //TODO handle standalone server
+            PlayMotionRrc(data);
+            
+        }
+
+        [ClientRpc]
+        private void PlayMotionRrc(AnimationCallData data)
+        {
+            if (hasAuthority) return;
+            StartCoroutine(ActionCoroutine(data));
+
+        }
+
+        private IEnumerator CoroutineWrapper(IEnumerator coroutine, Action callback)
+        {
+            yield return coroutine;
+            callback.Invoke();
+        }
+
+        private IEnumerator ActionCoroutine(AnimationCallData data)
         {
             float fadeInNTime = .051f;
             float fadeOutNTime = .25f;
-            var cachedState = animator.GetCurrentAnimatorStateInfo(layer);
+            var cachedState = animator.GetCurrentAnimatorStateInfo(data.layer);
             var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
 
             var actualPosition = animator.transform.position;
             var actualRotation = animator.transform.rotation;
             
-            transform.position = startPosition;
-            transform.rotation = startRotation;
+            transform.position = data.position;
+            transform.rotation = data.rotation;
             
             animator.transform.position = actualPosition;
             animator.transform.rotation = actualRotation;
@@ -88,20 +127,18 @@ namespace Game.Tools
             animator.transform.DOLocalMove(Vector3.zero, duration * .1f);
             animator.transform.DOLocalRotateQuaternion(Quaternion.identity, duration * .1f);
             
-            animator.CrossFade(stateNameHash, fadeInNTime, layer);
+            animator.CrossFade(data.hash, fadeInNTime, data.layer);
 
 
-            this.rootMotion = rootMotion;
+            rootMotion = true;
 
             yield return new WaitForSeconds(duration * (1 - fadeOutNTime));
 
-            animator.CrossFade(cachedState.fullPathHash, fadeOutNTime, layer);
+            animator.CrossFade(cachedState.fullPathHash, fadeOutNTime, data.layer);
 
-            yield return new WaitForSeconds(fadeOutNTime);
-            this.rootMotion = false;
-
-
-            callback();
+            //TODO it seems coroutine ends too early (can cause freeze if called one after another)
+            yield return new WaitForSeconds(fadeOutNTime*duration);
+            rootMotion = false;
         }
 
 

@@ -526,6 +526,7 @@
               <e p="ParkourConfig.cs" t="Include" />
             </e>
             <e p="Data" t="Include">
+              <e p="AnimationCallData.cs" t="Include" />
               <e p="ClimbPointInfo.cs" t="Include" />
               <e p="ClimbType.cs" t="Include" />
               <e p="MovementSpeed.cs" t="Include" />
