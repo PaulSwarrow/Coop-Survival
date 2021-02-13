@@ -30,7 +30,6 @@ namespace Game.Actors.Components
         [Inject] private GameCharacterController agent;
         [Inject] private ObstacleDetector obstacleDetector;
         private bool aim;
-        private bool inAction;
 
         private void Start()
         {
@@ -66,7 +65,7 @@ namespace Game.Actors.Components
             {
                 agent.transform.forward = forward;
             }
-            else
+            else if(!animator.InAction)
             {
                 var currentForward = agent.transform.forward;
                 var delta = Vector3.SignedAngle(currentForward, forward, Vector3.up);
@@ -77,12 +76,11 @@ namespace Game.Actors.Components
 
         public void ClimbMotion(ParkourMotion motion, ClimbPointInfo climbInfo)
         {
-            if (inAction) return;
+            if (animator.InAction) return;
 
             var q = Quaternion.LookRotation(climbInfo.normale, Vector3.up);
             var startPoint = climbInfo.startPoint + q * motion.StartOffset;
             agent.Active = false;
-            inAction = true;
             animator.PlayMotion(new AnimationCallData
                 {
                     layer = 0,
@@ -96,7 +94,6 @@ namespace Game.Actors.Components
         private void OnActionComplete()
         {
             agent.Active = true;
-            inAction = false;
         }
     }
 }

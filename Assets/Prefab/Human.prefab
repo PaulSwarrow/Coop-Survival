@@ -260,8 +260,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  animator: {fileID: 299215695686200119}
-  animatorHelper: {fileID: 8687782357946628905}
+  animator: {fileID: 8687782357946628905}
 --- !u!114 &8170732956395776168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,7 +287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4456cfd887874fc89e7ba600f928e4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 2
+  characterHeight: 2
+  stepHeight: 0.4
+  maxHeight: 2.4
+  radius: 0.5
+  maxHorizontalAngle: 35
+  scanDistance: 2
 --- !u!143 &2665266416964868808
 CharacterController:
   m_ObjectHideFlags: 0
@@ -319,6 +323,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd826bc70d824e1c8940396efccbd22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  r: 0.5
+  count: 6
+  edgeForce: 1.5
   controller: {fileID: 2665266416964868808}
 --- !u!114 &8687782357946628905
 MonoBehaviour:
@@ -420,12 +429,6 @@ GameObject:
 --- !u!4 &5964784350173409613 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7100fea8db96c0a4d876d834674e6756,
-    type: 3}
-  m_PrefabInstance: {fileID: 6146730415456016038}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &299215695686200119 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 7100fea8db96c0a4d876d834674e6756,
     type: 3}
   m_PrefabInstance: {fileID: 6146730415456016038}
   m_PrefabAsset: {fileID: 0}

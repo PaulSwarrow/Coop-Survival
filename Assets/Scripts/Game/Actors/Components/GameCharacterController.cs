@@ -53,7 +53,7 @@ namespace Game.Actors.Components
                 if (controller.isGrounded) virtualVelocity.y = -1;
             }
 
-            controller.Move(virtualVelocity * Time.deltaTime);
+            if(Active) controller.Move(virtualVelocity * Time.deltaTime);
         }
         
         public bool Active

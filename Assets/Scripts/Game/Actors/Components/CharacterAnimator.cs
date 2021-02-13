@@ -26,8 +26,7 @@ namespace Game.Tools
         private InputData data;
         private InputData cachedData;
 
-        [SerializeField] private Animator animator;
-        [SerializeField] private AnimatorHelper animatorHelper;
+        [SerializeField] private AnimatorHelper animator;
         private bool rootMotion;
 
         private void Update()
@@ -52,13 +51,14 @@ namespace Game.Tools
 
             if (rootMotion) //TODO blend
             {
-                transform.position += animatorHelper.Movement;
-                transform.rotation *= animatorHelper.Rotation;
+                transform.position += animator.Movement;
+                transform.rotation *= animator.Rotation;
             }
         }
 
         //API:
-        public Transform GetCameraTarget() => animator.GetBoneTransform(HumanBodyBones.Chest);
+        public bool InAction { get; private set; }
+        public Transform GetCameraTarget() => animator.ChestTransform;
 
         public bool Aim
         {
@@ -79,7 +79,7 @@ namespace Game.Tools
             };
             PlayMotion(data, callback);
         }
-        
+
         public void PlayMotion(AnimationCallData data, Action callback)
         {
             PlayMotionCommand(data);
@@ -91,7 +91,6 @@ namespace Game.Tools
         {
             //TODO handle standalone server
             PlayMotionRrc(data);
-            
         }
 
         [ClientRpc]
@@ -99,7 +98,6 @@ namespace Game.Tools
         {
             if (hasAuthority) return;
             StartCoroutine(ActionCoroutine(data));
-
         }
 
         private IEnumerator CoroutineWrapper(IEnumerator coroutine, Action callback)
@@ -110,27 +108,29 @@ namespace Game.Tools
 
         private IEnumerator ActionCoroutine(AnimationCallData data)
         {
+            InAction = true;
             float fadeInNTime = .051f;
             float fadeOutNTime = .25f;
-            var cachedState = animator.GetCurrentAnimatorStateInfo(data.layer);
+            var cachedState = animator.GetCurrentState(data.layer);
             if (cachedState.shortNameHash == data.hash)
             {
                 Debug.LogError("Actions overlap");
             }
+
             var duration = 1.03f; // animator.GetNextAnimatorClipInfo(layer).First().clip.length;
 
             var actualPosition = animator.transform.position;
             var actualRotation = animator.transform.rotation;
-            
+
             transform.position = data.position;
             transform.rotation = data.rotation;
-            
+
             animator.transform.position = actualPosition;
             animator.transform.rotation = actualRotation;
-            
-            animator.transform.DOLocalMove(Vector3.zero, duration * .1f);
-            animator.transform.DOLocalRotateQuaternion(Quaternion.identity, duration * .1f);
-            
+
+            animator.transform.DOLocalMove(Vector3.zero, duration * .06f);
+            animator.transform.DOLocalRotateQuaternion(Quaternion.identity, duration * .06f);
+
             animator.CrossFade(data.hash, fadeInNTime, data.layer);
 
 
@@ -142,11 +142,12 @@ namespace Game.Tools
 
             yield return new WaitUntil(() =>
             {
-                return animator.GetCurrentAnimatorStateInfo(data.layer).shortNameHash == cachedState.shortNameHash;
+                return animator.GetCurrentState(data.layer).shortNameHash == cachedState.shortNameHash;
             });
             //TODO it seems coroutine ends too early (can cause freeze if called one after another)
             // yield return new WaitForSeconds(fadeOutNTime*duration);
             rootMotion = false;
+            InAction = false;
         }
 
 
