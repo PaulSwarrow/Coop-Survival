@@ -41,7 +41,7 @@ namespace Game.Tools
                 }
             }
 
-            var localVelocity = transform.InverseTransformVector(NormalizedVelocity);
+            var localVelocity = transform.InverseTransformVector(Velocity);
 
             var turn = Vector3.SignedAngle(transform.forward, Forward, Vector3.up) / 10;
 
@@ -65,7 +65,7 @@ namespace Game.Tools
             set => data.aim = value;
         }
 
-        public Vector3 NormalizedVelocity { get; set; } //TODO remove hardcode
+        public Vector3 Velocity { get; set; } //TODO remove hardcode
         public Vector3 Forward { get; set; }
 
 

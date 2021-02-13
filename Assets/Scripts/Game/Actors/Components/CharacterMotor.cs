@@ -39,8 +39,8 @@ namespace Game.Actors.Components
 
         private void Update()
         {
-            animator.NormalizedVelocity = agent.Velocity.normalized * ((int) speed);
-        }
+            animator.Velocity = agent.Velocity;
+        }    
 
         public void SetAim(bool value)
         {
