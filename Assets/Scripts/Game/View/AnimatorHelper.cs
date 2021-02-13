@@ -18,6 +18,10 @@ namespace Game.View
             ChestTransform = animator.GetBoneTransform(HumanBodyBones.Chest);
         }
 
+        public void SetLayerWeight(int layer, float value)
+        {
+            animator.SetLayerWeight(layer, value);
+        }
 
         private void OnAnimatorMove()
         {

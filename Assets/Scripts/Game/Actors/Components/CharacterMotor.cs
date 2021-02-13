@@ -39,12 +39,12 @@ namespace Game.Actors.Components
         private void Update()
         {
             animator.Velocity = agent.Velocity;
+            animator.Aim = aim && !animator.InAction;
         }
 
         public void SetAim(bool value)
         {
             aim = value;
-            animator.Aim = value;
         }
 
         public void SetSpeed(MovementSpeed value)
@@ -65,7 +65,7 @@ namespace Game.Actors.Components
             {
                 agent.transform.forward = forward;
             }
-            else if(!animator.InAction)
+            else if (!animator.InAction)
             {
                 var currentForward = agent.transform.forward;
                 var delta = Vector3.SignedAngle(currentForward, forward, Vector3.up);

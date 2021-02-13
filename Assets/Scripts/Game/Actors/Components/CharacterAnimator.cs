@@ -48,6 +48,7 @@ namespace Game.Tools
             animator.SetFloat(StrafeKey, localVelocity.x);
             animator.SetFloat(TurnKey, turn);
             animator.SetBool(AimKey, cachedData.aim);
+            animator.SetLayerWeight(1, cachedData.aim ? 1 : 0);
 
             if (rootMotion) //TODO blend
             {
