@@ -835,6 +835,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6554658869022808700, guid: f2838cff57802a742b59e2f8d9b66550,
         type: 3}
+      propertyPath: spawnPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554658869022808700, guid: f2838cff57802a742b59e2f8d9b66550,
+        type: 3}
       propertyPath: offlineScene
       value: Assets/Scenes/Main.unity
       objectReference: {fileID: 0}
@@ -843,6 +848,12 @@ PrefabInstance:
       propertyPath: onlineScene
       value: Assets/Scenes/SampleScene.unity
       objectReference: {fileID: 0}
+    - target: {fileID: 6554658869022808700, guid: f2838cff57802a742b59e2f8d9b66550,
+        type: 3}
+      propertyPath: spawnPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 2334305813850036385, guid: 1a00742c3ae723c40b46b81fb912fbf7,
+        type: 3}
     - target: {fileID: 6554658869022808703, guid: f2838cff57802a742b59e2f8d9b66550,
         type: 3}
       propertyPath: m_LocalPosition.x

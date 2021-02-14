@@ -40,6 +40,7 @@ namespace Game.Actors.Components
         {
             animator.Velocity = agent.Velocity;
             animator.Aim = aim && !animator.InAction;
+            animator.SetAimTarget(AimTarget);
         }
 
         public void SetAim(bool value)
@@ -57,6 +58,8 @@ namespace Game.Actors.Components
         {
             agent.Move(vector * (speedValues[speed] * Time.deltaTime));
         }
+        
+        public Vector3 AimTarget { get; set; }
 
         public void Look(Vector3 forward)
         {

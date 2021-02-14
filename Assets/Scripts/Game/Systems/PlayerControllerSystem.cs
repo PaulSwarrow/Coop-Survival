@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using App;
 using Game.Actors;
 using Game.Configs;
@@ -6,6 +7,7 @@ using Game.Data;
 using Game.Models;
 using Lib.UnityQuickTools.Collections;
 using Libs.GameFramework;
+using Libs.GameFramework.Systems;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -20,10 +22,12 @@ namespace DefaultNamespace
         [Inject] private GameCharacterSystem characterSystem;
         [Inject] private Camera camera;
         [Inject] private BaseGameManager manager;
+        [Inject] private ObjectSpawnSystem spawnSystem;
 
 
         private GameCharacterActor target;
         private ParkourConfig parkourConfig;
+        private Vector3 aimTarget;
         public GameCharacterActor Target => target; //hide by interface?
 
 
@@ -49,14 +53,31 @@ namespace DefaultNamespace
 
         public override void Subscribe()
         {
+            manager.GizmosEvent += DrawGizmos;
             manager.UpdateEvent += OnUpdate;
+        }
+
+        private void DrawGizmos()
+        {
+            Gizmos.color = Color.magenta;
+            Gizmos.DrawWireSphere(aimTarget, 1);
         }
 
         private void OnUpdate()
         {
             if (target == null) return; //TODO opt
 
+            if (target.Holder.IsEmpty)
+            {
+
+                //TEST:
+                var weaponConfig = AppManager.current.resources.weapons.First();
+                var weapon = spawnSystem.Spawn(weaponConfig.prefab);
+                target.Holder.SetContent(weapon);
+            }
+            
             var aim = Input.GetButton("Fire2");
+            aim = true;
             var input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             var q = Quaternion.Euler(0, camera.transform.eulerAngles.y, 0);
             var moveVector = q * Vector3.ClampMagnitude(input, 1);
@@ -68,6 +89,9 @@ namespace DefaultNamespace
             {
                 target.Motor.SetSpeed(MovementSpeed.walk);
                 target.Motor.Look(lookVector);
+
+                aimTarget = camera.transform.position + camera.transform.forward * 1000;
+                target.Motor.AimTarget = aimTarget;
             }
             else
             {

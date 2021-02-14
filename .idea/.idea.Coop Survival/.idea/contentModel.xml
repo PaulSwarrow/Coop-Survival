@@ -4,9 +4,13 @@
     <e p="C:\Users\Pall\.Rider2019.3\system\extResources" t="IncludeRecursive" />
     <e p="C:\Users\Pall\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Coop Survival.-969367821.00" t="ExcludeRecursive" />
     <e p="D:\Pall\coding\Coop Survival" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp-firstpass.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Editor" t="Include">
+          <e p="AimSolverEditor.cs" t="Include" />
+        </e>
         <e p="Libs" t="Include">
           <e p="GameFramework" t="Include">
             <e p="App" t="Include">
@@ -499,6 +503,7 @@
               <e p="ResourcesProvider.cs" t="Include" />
             </e>
             <e p="Tools" t="Include">
+              <e p="DirectionGizmo.cs" t="Include" />
               <e p="ObjectPropertiesOutput.cs" t="Include" />
             </e>
             <e p="Ui" t="Include">
@@ -515,6 +520,7 @@
               <e p="Components" t="Include">
                 <e p="BaseActorPositionHandler.cs" t="Include" />
                 <e p="CharacterAnimator.cs" t="Include" />
+                <e p="CharacterItemHolder.cs" t="Include" />
                 <e p="CharacterMotor.cs" t="Include" />
                 <e p="GameCharacterController.cs" t="Include" />
                 <e p="NetworkNavmeshAgent.cs" t="Include" />
@@ -524,6 +530,7 @@
               <e p="WeaponActor.cs" t="Include" />
             </e>
             <e p="Configs" t="Include">
+              <e p="ItemHoldTypeAnimatorConfig.cs" t="Include" />
               <e p="ParkourConfig.cs" t="Include" />
               <e p="WeaponConfig.cs" t="Include" />
             </e>
@@ -561,6 +568,7 @@
               <e p="SaveLoadSystem.cs" t="Include" />
             </e>
             <e p="View" t="Include">
+              <e p="AimSolver.cs" t="Include" />
               <e p="AnimatorHelper.cs" t="Include" />
             </e>
           </e>

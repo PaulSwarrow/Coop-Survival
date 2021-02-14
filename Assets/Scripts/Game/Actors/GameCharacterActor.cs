@@ -21,6 +21,8 @@ namespace Game.Actors
 
         [Inject] public CharacterMotor Motor { get; private set; }
         [Inject] public ObstacleDetector ObstacleDetector { get; private set; }
+        [Inject] public CharacterItemHolder Holder { get; private set; }
+
         [Inject] private CharacterAnimator animator;
 
         private void Awake()
@@ -35,6 +37,7 @@ namespace Game.Actors
             dependencyContainer.Register(GetComponent<CharacterAnimator>());
             dependencyContainer.Register(GetComponent<CharacterMotor>());
             dependencyContainer.Register(GetComponent<ObstacleDetector>());
+            dependencyContainer.Register(GetComponent<CharacterItemHolder>());
             dependencyContainer.InjectDependencies();
         }
 

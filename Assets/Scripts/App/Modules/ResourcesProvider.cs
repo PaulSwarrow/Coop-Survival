@@ -11,8 +11,8 @@ namespace App.Modules
 
         public void Init()
         {
-            parkourConfig = Resources.Load<ParkourConfig>("Configs/ParkourMotions");
-            weapons = Resources.LoadAll<WeaponConfig>("Configs/");
+            parkourConfig = Resources.Load<ParkourConfig>("ParkourMotions");
+            weapons = Resources.LoadAll<WeaponConfig>("");
             Debug.Log(weapons.Length);
         }
     }

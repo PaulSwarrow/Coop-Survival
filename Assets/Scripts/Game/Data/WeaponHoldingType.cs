@@ -1,6 +1,6 @@
 ﻿namespace Game.Data
 {
-    public enum WeaponHoldingType
+    public enum ItemHoldType
     {
         None = 0,
         MeleeOneHand = 1,

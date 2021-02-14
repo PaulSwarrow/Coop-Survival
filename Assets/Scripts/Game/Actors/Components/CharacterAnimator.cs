@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using DG.Tweening;
+using Game.Actors.Components;
 using Game.Data;
 using Game.View;
 using Libs.GameFramework;
@@ -17,15 +18,18 @@ namespace Game.Tools
         private static readonly int ForwardKey = Animator.StringToHash("forward");
         private static readonly int StrafeKey = Animator.StringToHash("strafe");
         private static readonly int TurnKey = Animator.StringToHash("turn");
+        private static readonly int HoldKey = Animator.StringToHash("holdType");
 
         private struct InputData
         {
             public bool aim;
+            public Vector3 aimPoint;
+            public ItemHoldType holdType;
         }
 
         private InputData data;
         private InputData cachedData;
-
+        [SerializeField] private Transform cameraTarget;
         [SerializeField] private AnimatorHelper animator;
         private bool rootMotion;
 
@@ -49,21 +53,36 @@ namespace Game.Tools
             animator.SetFloat(TurnKey, turn);
             animator.SetBool(AimKey, cachedData.aim);
             animator.SetLayerWeight(1, cachedData.aim ? 1 : 0);
+            animator.SetInt(HoldKey, (int) ItemHoldType);
 
             if (rootMotion) //TODO blend
             {
                 transform.position += animator.Movement;
                 transform.rotation *= animator.Rotation;
             }
+
+
+            //ik 
+            animator.LookAtTarget = transform.TransformPoint(cachedData.aimPoint);
+            animator.LookAtWeight = 1;
+            animator.HeadWeight = 1;
+            animator.TorsoWeight = .5f;
         }
 
+
         //API:
+        public ItemHoldType ItemHoldType { get; set; }
         public bool InAction { get; private set; }
-        public Transform GetCameraTarget() => animator.ChestTransform;
+        public Transform GetCameraTarget() => cameraTarget;
 
         public bool Aim
         {
             set => data.aim = value;
+        }
+
+        public void SetAimTarget(Vector3 point)
+        {
+            data.aimPoint = transform.InverseTransformPoint(point);
         }
 
         public Vector3 Velocity { get; set; } //TODO remove hardcode
@@ -87,6 +106,7 @@ namespace Game.Tools
             StartCoroutine(CoroutineWrapper(ActionCoroutine(data), callback));
         }
 
+        //Sync:
         [Command]
         private void PlayMotionCommand(AnimationCallData data)
         {
@@ -155,7 +175,6 @@ namespace Game.Tools
             InAction = false;
         }
 
-
         //SYNC:
         [Command]
         private void SyncUp(InputData input)
@@ -168,6 +187,13 @@ namespace Game.Tools
         private void SyncDown(InputData input)
         {
             cachedData = input;
+        }
+
+        public Transform GetBone(HumanBodyBones boneId) => animator.GetBone(boneId);
+
+        public void SetIKTarget(AvatarIKGoal goal, Transform target)
+        {
+            animator.SetIkTarget(goal, target);
         }
     }
 }
